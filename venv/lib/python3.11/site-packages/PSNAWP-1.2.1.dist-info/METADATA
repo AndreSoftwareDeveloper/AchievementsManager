@@ -1,0 +1,241 @@
+Metadata-Version: 2.1
+Name: PSNAWP
+Version: 1.2.1
+Summary: Python API Wrapper for PlayStation Network API
+Home-page: https://github.com/isFakeAccount/psnawp
+Author: Yoshikage Kira (@isFakeAccount)
+Author-email: trevorphillips@gmx.us
+License: MIT
+Project-URL: Bug Tracker, https://github.com/isFakeAccount/psnawp/issues
+Project-URL: Changelog, https://github.com/isFakeAccount/psnawp/blob/master/CHANGELOG.md
+Project-URL: Source Code, https://github.com/isFakeAccount/psnawp
+Project-URL: Documentation, https://psnawp.readthedocs.io/en/latest/
+Keywords: PSN API
+Platform: any
+Classifier: Development Status :: 4 - Beta
+Classifier: Intended Audience :: Developers
+Classifier: License :: OSI Approved :: MIT License
+Classifier: Operating System :: OS Independent
+Classifier: Programming Language :: Python
+Classifier: Programming Language :: Python :: 3.8
+Classifier: Programming Language :: Python :: 3.9
+Classifier: Programming Language :: Python :: 3.10
+Classifier: Programming Language :: Python :: 3.11
+Classifier: Topic :: Software Development :: Libraries :: Python Modules
+Requires-Python: >=3.8
+Description-Content-Type: text/markdown
+License-File: LICENSE.md
+Requires-Dist: attrs (==22.1.0)
+Requires-Dist: certifi (==2022.12.7)
+Requires-Dist: chardet (==5.1.0)
+Requires-Dist: charset-normalizer (==2.1.1)
+Requires-Dist: idna (==3.4)
+Requires-Dist: requests (==2.28.1)
+Requires-Dist: urllib3 (==1.26.13)
+Provides-Extra: docs
+Requires-Dist: sphinx (==5.2.2) ; extra == 'docs'
+Requires-Dist: sphinx-rtd-theme (==1.0.0) ; extra == 'docs'
+Provides-Extra: testing
+Requires-Dist: alabaster (==0.7.12) ; extra == 'testing'
+Requires-Dist: attrs (==22.1.0) ; extra == 'testing'
+Requires-Dist: babel (==2.11.0) ; extra == 'testing'
+Requires-Dist: bleach (==5.0.1) ; extra == 'testing'
+Requires-Dist: build (==0.9.0) ; extra == 'testing'
+Requires-Dist: certifi (==2022.12.7) ; extra == 'testing'
+Requires-Dist: cffi (==1.15.1) ; extra == 'testing'
+Requires-Dist: cfgv (==3.3.1) ; extra == 'testing'
+Requires-Dist: chardet (==5.1.0) ; extra == 'testing'
+Requires-Dist: charset-normalizer (==2.1.1) ; extra == 'testing'
+Requires-Dist: click (==8.1.3) ; extra == 'testing'
+Requires-Dist: commonmark (==0.9.1) ; extra == 'testing'
+Requires-Dist: coverage[toml] (==6.5.0) ; extra == 'testing'
+Requires-Dist: cryptography (==38.0.4) ; extra == 'testing'
+Requires-Dist: distlib (==0.3.6) ; extra == 'testing'
+Requires-Dist: docutils (==0.17.1) ; extra == 'testing'
+Requires-Dist: exceptiongroup (==1.0.4) ; extra == 'testing'
+Requires-Dist: filelock (==3.8.2) ; extra == 'testing'
+Requires-Dist: flake8 (==6.0.0) ; extra == 'testing'
+Requires-Dist: identify (==2.5.9) ; extra == 'testing'
+Requires-Dist: idna (==3.4) ; extra == 'testing'
+Requires-Dist: imagesize (==1.4.1) ; extra == 'testing'
+Requires-Dist: importlib-metadata (==5.1.0) ; extra == 'testing'
+Requires-Dist: iniconfig (==1.1.1) ; extra == 'testing'
+Requires-Dist: jaraco-classes (==3.2.3) ; extra == 'testing'
+Requires-Dist: jeepney (==0.8.0) ; extra == 'testing'
+Requires-Dist: jinja2 (==3.1.2) ; extra == 'testing'
+Requires-Dist: keyring (==23.11.0) ; extra == 'testing'
+Requires-Dist: markdown-it-py (==2.1.0) ; extra == 'testing'
+Requires-Dist: markupsafe (==2.1.1) ; extra == 'testing'
+Requires-Dist: mccabe (==0.7.0) ; extra == 'testing'
+Requires-Dist: mdit-py-plugins (==0.3.3) ; extra == 'testing'
+Requires-Dist: mdurl (==0.1.2) ; extra == 'testing'
+Requires-Dist: more-itertools (==9.0.0) ; extra == 'testing'
+Requires-Dist: multidict (==6.0.3) ; extra == 'testing'
+Requires-Dist: mypy (==0.991) ; extra == 'testing'
+Requires-Dist: mypy-extensions (==0.4.3) ; extra == 'testing'
+Requires-Dist: myst-parser (==0.18.1) ; extra == 'testing'
+Requires-Dist: nodeenv (==1.7.0) ; extra == 'testing'
+Requires-Dist: packaging (==22.0) ; extra == 'testing'
+Requires-Dist: pep517 (==0.13.0) ; extra == 'testing'
+Requires-Dist: pip-tools (==6.11.0) ; extra == 'testing'
+Requires-Dist: pkginfo (==1.9.2) ; extra == 'testing'
+Requires-Dist: platformdirs (==2.6.0) ; extra == 'testing'
+Requires-Dist: pluggy (==1.0.0) ; extra == 'testing'
+Requires-Dist: pre-commit (==2.20.0) ; extra == 'testing'
+Requires-Dist: pycodestyle (==2.10.0) ; extra == 'testing'
+Requires-Dist: pycparser (==2.21) ; extra == 'testing'
+Requires-Dist: pyflakes (==3.0.1) ; extra == 'testing'
+Requires-Dist: pygments (==2.13.0) ; extra == 'testing'
+Requires-Dist: pytest (==7.2.0) ; extra == 'testing'
+Requires-Dist: pytest-cov (==4.0.0) ; extra == 'testing'
+Requires-Dist: pytest-vcr (==1.0.2) ; extra == 'testing'
+Requires-Dist: python-dotenv (==0.21.0) ; extra == 'testing'
+Requires-Dist: pytz (==2022.6) ; extra == 'testing'
+Requires-Dist: pyyaml (==6.0) ; extra == 'testing'
+Requires-Dist: readme-renderer (==37.3) ; extra == 'testing'
+Requires-Dist: requests (==2.28.1) ; extra == 'testing'
+Requires-Dist: requests-toolbelt (==0.10.1) ; extra == 'testing'
+Requires-Dist: rfc3986 (==2.0.0) ; extra == 'testing'
+Requires-Dist: rich (==12.6.0) ; extra == 'testing'
+Requires-Dist: secretstorage (==3.3.3) ; extra == 'testing'
+Requires-Dist: six (==1.16.0) ; extra == 'testing'
+Requires-Dist: snowballstemmer (==2.2.0) ; extra == 'testing'
+Requires-Dist: sphinx (==5.3.0) ; extra == 'testing'
+Requires-Dist: sphinx-rtd-theme (==1.1.1) ; extra == 'testing'
+Requires-Dist: sphinxcontrib-applehelp (==1.0.2) ; extra == 'testing'
+Requires-Dist: sphinxcontrib-devhelp (==1.0.2) ; extra == 'testing'
+Requires-Dist: sphinxcontrib-htmlhelp (==2.0.0) ; extra == 'testing'
+Requires-Dist: sphinxcontrib-jsmath (==1.0.1) ; extra == 'testing'
+Requires-Dist: sphinxcontrib-qthelp (==1.0.3) ; extra == 'testing'
+Requires-Dist: sphinxcontrib-serializinghtml (==1.1.5) ; extra == 'testing'
+Requires-Dist: toml (==0.10.2) ; extra == 'testing'
+Requires-Dist: tomli (==2.0.1) ; extra == 'testing'
+Requires-Dist: twine (==4.0.2) ; extra == 'testing'
+Requires-Dist: types-attrs (==19.1.0) ; extra == 'testing'
+Requires-Dist: types-requests (==2.28.11.5) ; extra == 'testing'
+Requires-Dist: types-urllib3 (==1.26.25.4) ; extra == 'testing'
+Requires-Dist: typing-extensions (==4.4.0) ; extra == 'testing'
+Requires-Dist: urllib3 (==1.26.13) ; extra == 'testing'
+Requires-Dist: vcrpy (==4.2.1) ; extra == 'testing'
+Requires-Dist: virtualenv (==20.17.1) ; extra == 'testing'
+Requires-Dist: webencodings (==0.5.1) ; extra == 'testing'
+Requires-Dist: wheel (==0.38.4) ; extra == 'testing'
+Requires-Dist: wrapt (==1.14.1) ; extra == 'testing'
+Requires-Dist: yarl (==1.8.2) ; extra == 'testing'
+Requires-Dist: zipp (==3.11.0) ; extra == 'testing'
+
+# PlayStation Network API Wrapper Python (PSNAWP)
+
+Retrieve User Information, Trophies, Game and Store data from the PlayStation Network
+
+[![PyPI version](https://badge.fury.io/py/psnawp.svg)](https://badge.fury.io/py/psnawp)
+[![Downloads](https://pepy.tech/badge/psnawp)](https://pepy.tech/project/psnawp)
+[![python-logo](https://img.shields.io/badge/python-3.8_|_3.9_|_3.10_|_3.11-blue.svg)](https://www.python.org/)
+[![pytest](https://github.com/isFakeAccount/psnawp/actions/workflows/pytest.yaml/badge.svg)](https://github.com/isFakeAccount/psnawp/actions/workflows/pytest.yaml)
+[![pre-commit](https://github.com/isFakeAccount/psnawp/actions/workflows/pre-commit.yaml/badge.svg)](https://github.com/isFakeAccount/psnawp/actions/workflows/pre-commit.yaml)
+[![Code style: black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/psf/black)
+[![Documentation Status](https://readthedocs.org/projects/psnawp/badge/?version=latest)](https://psnawp.readthedocs.io/en/latest/?badge=latest)
+[![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://opensource.org/licenses/MIT)
+
+<!-- Pytest Coverage Comment:Begin -->
+<a href="https://github.com/isFakeAccount/psnawp/blob/main/README.md"><img alt="Coverage" src="https://img.shields.io/badge/Coverage-98%25-brightgreen.svg" /></a><details><summary>Coverage Report </summary><table><tr><th>File</th><th>Stmts</th><th>Miss</th><th>Cover</th><th>Missing</th></tr><tbody><tr><td colspan="5"><b>/opt/hostedtoolcache/Python/3.11.1/x64/lib/python3.11/site-packages/psnawp_api</b></td></tr><tr><td>&nbsp; &nbsp;<a href="https://github.com/isFakeAccount/psnawp/blob/main//opt/hostedtoolcache/Python/3.11.1/x64/lib/python3.11/site-packages/psnawp_api/__init__.py">__init__.py</a></td><td>1</td><td>0</td><td>100%</td><td>&nbsp;</td></tr><tr><td>&nbsp; &nbsp;<a href="https://github.com/isFakeAccount/psnawp/blob/main//opt/hostedtoolcache/Python/3.11.1/x64/lib/python3.11/site-packages/psnawp_api/psnawp.py">psnawp.py</a></td><td>35</td><td>0</td><td>100%</td><td>&nbsp;</td></tr><tr><td colspan="5"><b>/opt/hostedtoolcache/Python/3.11.1/x64/lib/python3.11/site-packages/psnawp_api/core</b></td></tr><tr><td>&nbsp; &nbsp;<a href="https://github.com/isFakeAccount/psnawp/blob/main//opt/hostedtoolcache/Python/3.11.1/x64/lib/python3.11/site-packages/psnawp_api/core/__init__.py">__init__.py</a></td><td>0</td><td>0</td><td>100%</td><td>&nbsp;</td></tr><tr><td>&nbsp; &nbsp;<a href="https://github.com/isFakeAccount/psnawp/blob/main//opt/hostedtoolcache/Python/3.11.1/x64/lib/python3.11/site-packages/psnawp_api/core/authenticator.py">authenticator.py</a></td><td>46</td><td>3</td><td>3</td><td><a href="https://github.com/isFakeAccount/psnawp/blob/main//opt/hostedtoolcache/Python/3.11.1/x64/lib/python3.11/site-packages/psnawp_api/core/authenticator.py#L 93%"> 93%</a></td></tr><tr><td>&nbsp; &nbsp;<a href="https://github.com/isFakeAccount/psnawp/blob/main//opt/hostedtoolcache/Python/3.11.1/x64/lib/python3.11/site-packages/psnawp_api/core/psnawp_exceptions.py">psnawp_exceptions.py</a></td><td>9</td><td>0</td><td>100%</td><td>&nbsp;</td></tr><tr><td colspan="5"><b>/opt/hostedtoolcache/Python/3.11.1/x64/lib/python3.11/site-packages/psnawp_api/models</b></td></tr><tr><td>&nbsp; &nbsp;<a href="https://github.com/isFakeAccount/psnawp/blob/main//opt/hostedtoolcache/Python/3.11.1/x64/lib/python3.11/site-packages/psnawp_api/models/__init__.py">__init__.py</a></td><td>0</td><td>0</td><td>100%</td><td>&nbsp;</td></tr><tr><td>&nbsp; &nbsp;<a href="https://github.com/isFakeAccount/psnawp/blob/main//opt/hostedtoolcache/Python/3.11.1/x64/lib/python3.11/site-packages/psnawp_api/models/client.py">client.py</a></td><td>68</td><td>0</td><td>100%</td><td>&nbsp;</td></tr><tr><td>&nbsp; &nbsp;<a href="https://github.com/isFakeAccount/psnawp/blob/main//opt/hostedtoolcache/Python/3.11.1/x64/lib/python3.11/site-packages/psnawp_api/models/game_title.py">game_title.py</a></td><td>22</td><td>0</td><td>100%</td><td>&nbsp;</td></tr><tr><td>&nbsp; &nbsp;<a href="https://github.com/isFakeAccount/psnawp/blob/main//opt/hostedtoolcache/Python/3.11.1/x64/lib/python3.11/site-packages/psnawp_api/models/group.py">group.py</a></td><td>52</td><td>0</td><td>100%</td><td>&nbsp;</td></tr><tr><td>&nbsp; &nbsp;<a href="https://github.com/isFakeAccount/psnawp/blob/main//opt/hostedtoolcache/Python/3.11.1/x64/lib/python3.11/site-packages/psnawp_api/models/search.py">search.py</a></td><td>22</td><td>0</td><td>100%</td><td>&nbsp;</td></tr><tr><td>&nbsp; &nbsp;<a href="https://github.com/isFakeAccount/psnawp/blob/main//opt/hostedtoolcache/Python/3.11.1/x64/lib/python3.11/site-packages/psnawp_api/models/title_stats.py">title_stats.py</a></td><td>64</td><td>2</td><td>2</td><td><a href="https://github.com/isFakeAccount/psnawp/blob/main//opt/hostedtoolcache/Python/3.11.1/x64/lib/python3.11/site-packages/psnawp_api/models/title_stats.py#L 97%"> 97%</a></td></tr><tr><td>&nbsp; &nbsp;<a href="https://github.com/isFakeAccount/psnawp/blob/main//opt/hostedtoolcache/Python/3.11.1/x64/lib/python3.11/site-packages/psnawp_api/models/user.py">user.py</a></td><td>69</td><td>0</td><td>100%</td><td>&nbsp;</td></tr><tr><td colspan="5"><b>/opt/hostedtoolcache/Python/3.11.1/x64/lib/python3.11/site-packages/psnawp_api/models/trophies</b></td></tr><tr><td>&nbsp; &nbsp;<a href="https://github.com/isFakeAccount/psnawp/blob/main//opt/hostedtoolcache/Python/3.11.1/x64/lib/python3.11/site-packages/psnawp_api/models/trophies/__init__.py">__init__.py</a></td><td>0</td><td>0</td><td>100%</td><td>&nbsp;</td></tr><tr><td>&nbsp; &nbsp;<a href="https://github.com/isFakeAccount/psnawp/blob/main//opt/hostedtoolcache/Python/3.11.1/x64/lib/python3.11/site-packages/psnawp_api/models/trophies/trophy.py">trophy.py</a></td><td>112</td><td>0</td><td>100%</td><td>&nbsp;</td></tr><tr><td>&nbsp; &nbsp;<a href="https://github.com/isFakeAccount/psnawp/blob/main//opt/hostedtoolcache/Python/3.11.1/x64/lib/python3.11/site-packages/psnawp_api/models/trophies/trophy_constants.py">trophy_constants.py</a></td><td>25</td><td>0</td><td>100%</td><td>&nbsp;</td></tr><tr><td>&nbsp; &nbsp;<a href="https://github.com/isFakeAccount/psnawp/blob/main//opt/hostedtoolcache/Python/3.11.1/x64/lib/python3.11/site-packages/psnawp_api/models/trophies/trophy_group.py">trophy_group.py</a></td><td>89</td><td>0</td><td>100%</td><td>&nbsp;</td></tr><tr><td>&nbsp; &nbsp;<a href="https://github.com/isFakeAccount/psnawp/blob/main//opt/hostedtoolcache/Python/3.11.1/x64/lib/python3.11/site-packages/psnawp_api/models/trophies/trophy_summary.py">trophy_summary.py</a></td><td>25</td><td>0</td><td>100%</td><td>&nbsp;</td></tr><tr><td>&nbsp; &nbsp;<a href="https://github.com/isFakeAccount/psnawp/blob/main//opt/hostedtoolcache/Python/3.11.1/x64/lib/python3.11/site-packages/psnawp_api/models/trophies/trophy_titles.py">trophy_titles.py</a></td><td>84</td><td>0</td><td>100%</td><td>&nbsp;</td></tr><tr><td>&nbsp; &nbsp;<a href="https://github.com/isFakeAccount/psnawp/blob/main//opt/hostedtoolcache/Python/3.11.1/x64/lib/python3.11/site-packages/psnawp_api/models/trophies/utility_functions.py">utility_functions.py</a></td><td>7</td><td>0</td><td>100%</td><td>&nbsp;</td></tr><tr><td colspan="5"><b>/opt/hostedtoolcache/Python/3.11.1/x64/lib/python3.11/site-packages/psnawp_api/utils</b></td></tr><tr><td>&nbsp; &nbsp;<a href="https://github.com/isFakeAccount/psnawp/blob/main//opt/hostedtoolcache/Python/3.11.1/x64/lib/python3.11/site-packages/psnawp_api/utils/__init__.py">__init__.py</a></td><td>0</td><td>0</td><td>100%</td><td>&nbsp;</td></tr><tr><td>&nbsp; &nbsp;<a href="https://github.com/isFakeAccount/psnawp/blob/main//opt/hostedtoolcache/Python/3.11.1/x64/lib/python3.11/site-packages/psnawp_api/utils/endpoints.py">endpoints.py</a></td><td>2</td><td>0</td><td>100%</td><td>&nbsp;</td></tr><tr><td>&nbsp; &nbsp;<a href="https://github.com/isFakeAccount/psnawp/blob/main//opt/hostedtoolcache/Python/3.11.1/x64/lib/python3.11/site-packages/psnawp_api/utils/misc.py">misc.py</a></td><td>35</td><td>0</td><td>100%</td><td>&nbsp;</td></tr><tr><td>&nbsp; &nbsp;<a href="https://github.com/isFakeAccount/psnawp/blob/main//opt/hostedtoolcache/Python/3.11.1/x64/lib/python3.11/site-packages/psnawp_api/utils/request_builder.py">request_builder.py</a></td><td>72</td><td>15</td><td>15</td><td><a href="https://github.com/isFakeAccount/psnawp/blob/main//opt/hostedtoolcache/Python/3.11.1/x64/lib/python3.11/site-packages/psnawp_api/utils/request_builder.py#L 79%"> 79%</a></td></tr><tr><td><b>TOTAL</b></td><td><b>839</b></td><td><b>20</b></td><td><b>98%</b></td><td>&nbsp;</td></tr></tbody></table></details>
+<!-- Pytest Coverage Comment:End -->
+
+## How to install
+
+### From PyPI
+
+```
+pip install PSNAWP
+```
+### Using `setup.py`
+To install the library into python. First you need to clone the repo at your local machine and run the following command from the root directory of the repo
+
+```
+python setup.py install
+```
+
+## Important Links
+> PyPI: https://pypi.org/project/PSNAWP/
+>
+> Read the Docs: https://psnawp.readthedocs.io/en/latest/
+
+## Getting Started
+
+To get started you need to obtain npsso <64 character code>. You need to follow the following steps
+
+1. Login into your [My PlayStation](https://my.playstation.com/) account.
+2. In another tab, go to https://ca.account.sony.com/api/v1/ssocookie
+3. If you are logged in you should see a text similar to this
+
+```json
+{"npsso":"<64 character npsso code>"}
+```
+This npsso code will be used in the api for authentication purposes. The refresh token that is generated from npsso lasts about 2 months. After that you have to get a new npsso token. The bot will print a warning if there are less than 3 days left in refresh token expiration.
+
+Following is the quick example on how to use this library
+
+```py
+from psnawp_api import PSNAWP
+
+psnawp = PSNAWP('<64 character npsso code>')
+
+# This is you
+client = psnawp.me()
+print(client.online_id)
+print(client.account_id)
+print(client.get_account_devices())
+print(client.get_profile_legacy())
+print(client.friends_list())
+print(client.blocked_list())
+print(client.available_to_play())
+groups = client.get_groups()
+print(groups)
+
+# Getting user from online
+example_user_1 = psnawp.user(online_id="VaultTec-Co")
+example_user_2 = psnawp.user(online_id="test")
+print(example_user_1.online_id)
+print(example_user_1.account_id)
+print(example_user_1.profile())
+print(example_user_1.prev_online_id)
+print(example_user_1.get_presence())
+print(example_user_1.friendship())
+print(example_user_1.is_blocked())
+
+# Getting user from Account ID
+user_account_id = psnawp.user(account_id='9122947611907501295')
+print(user_account_id.online_id)
+
+# Sending Message
+group = psnawp.group(group_id='38335156987791a6750a33ae452ec8666177b65e-103')
+print(group.get_group_information())
+print(group.get_conversation(10))
+print(group.send_message("Hello World"))
+print(group.change_name("API Testing 3"))
+print(group.leave_group())
+
+# Creating new group
+new_group = psnawp.group(users_list=[example_user_1, example_user_2])
+
+search = psnawp.search()
+print(search.get_title_details(title_id="PPSA03420_00"))
+print(search.universal_search("GTA 5"))
+
+# Get Play Times (PS4, PS5 above only)
+titles_with_stats = client.title_stats()
+ ```
+
+**Note: If you want to create multiple instances of psnawp you need to get npsso code from separate PSN accounts. If you generate a new npsso with same account your previous npsso will expire immediately.**
+
+## Contribution
+
+All bug reposts and features requests are welcomed, although I am new at making python libraries, so it may take me a while to implement some features. Suggestions are welcomes if I am doing something that is an unconventional way of doing it.
+
+## Disclaimer
+
+This project was not intended to be used for spam, abuse, or anything of the sort. Any use of this project for those purposes is not endorsed. Please keep this in mind when creating applications using this API wrapper.
+
+## Credit
+
+This project contains code from PlayStationNetwork::API and PSN-PHP Wrapper that was translated to Python. See more in [LICENSE](LICENSE.md)
