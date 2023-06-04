@@ -5,7 +5,7 @@ from enum import Enum
 
 try:
     psnawp = input("Enter valid npsso code: ")       #TODO: będzie ogarnięty frontend to zrobić jakąś instrukcję dla użytkownika, odnośniki do odpowiednich stron
-    npssoSave = open("npssoSave.txt", 'w')           #TODO: tylko input w try, albo dać input w pętli wykonującej się dopóki użytkosniwk poda prawidłowy npsso
+    npssoSave = open("npssoSave.txt", 'w')           #TODO: input powinien być w pętli wykonującej się dopóki użytkownik poda prawidłowy npsso
     print(psnawp, file=npssoSave)
     npssoSave.close()
 except psnawp_api.core.psnawp_exceptions.PSNAWPAuthenticationError:
@@ -20,7 +20,7 @@ print("Your nick is: " + client.online_id + "\n")
 choice = int(input("1 - Show my games\n" +
                    "2 -  Show trophies for specific game\n"))
 
-def sumTrophies(title, isEarned : bool):                        #TODO:  don't use camel case, instead of this use: sum_trophies
+def sum_trophies(title, isEarned : bool):
     if isEarned:
          trophyStatus = title.earned_trophies
     else:
@@ -30,13 +30,16 @@ def sumTrophies(title, isEarned : bool):                        #TODO:  don't us
                trophyStatus.gold +
                trophyStatus.platinum)
 
-def showGamesData(x):
-    match x:
-        case 1:
-            for trophy_title in client.trophy_titles(limit = None):             #TODO: wywalić do do funkcji, w case ma być tylko 1 linia
+def show_my_games():
+            for trophy_title in client.trophy_titles(limit = None):
                 print(trophy_title.title_name)
                 print(str(trophy_title.progress) + "%\t" + 
-                      sumTrophies(trophy_title, True) +'/' + sumTrophies(trophy_title, False) + "\n")
+                      sum_trophies(trophy_title, True) +'/' + sum_trophies(trophy_title, False) + "\n")
+                
+def show_games_data(x):
+    match x:
+        case 1:
+              show_my_games()
         case 2:
               raise NotImplementedError("Option like that doesn't exist yet!") 
         case _:
@@ -46,4 +49,4 @@ for dupa in client.trophies():
      print(dupa)
 dupa = psnawp.game_title
 
-showGamesData(choice)
+show_games_data(choice)
