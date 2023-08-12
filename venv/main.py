@@ -4,29 +4,31 @@ from enum import Enum
 import psnawp_api
 from psnawp_api import PSNAWP
 from psnawp_api.core.authenticator import Authenticator
-from psnawp_api.core.psnawp_exceptions import PSNAWPAuthenticationError
+from psnawp_api.core.psnawp_exceptions import PSNAWPAuthenticationError as errorMessage
 from psnawp_api.models.game_title import GameTitle
 from psnawp_api.models.trophies.trophy import TrophyBuilder
 from psnawp_api.models.trophies.trophy_titles import TrophyTitles
 from psnawp_api.utils.request_builder import RequestBuilder
 from psnawp_api.models.search import Search
 
+
 try:
     # psnawp = input("Enter valid npsso code: ")        #TODO: input powinien być w pętli wykonującej się dopóki użytkownik poda prawidłowy npsso
     with open(
-            "npssoSave.txt") as npssoSave:  # TODO: będzie ogarnięty frontend to zrobić jakąś instrukcję dla użytkownika, odnośniki do odpowiednich stron
+            "npssoSave.txt") as npssoSave:  # TODO: guide for user how to obtain NPSSO
         npsso = npssoSave.readline()
     npssoSave.close()
     psnawp = PSNAWP(npsso)
-except PSNAWPAuthenticationError as errorMessage:
+except errorMessage:
     print(errorMessage)
     sys.exit()
 
 client = psnawp.me()
-print("Your nick is: " + client.online_id + "\n")
-choice = int(input("1 - Show my games\n" +
-                   "2 - Show trophies for specific game\n" +
-                   "3 - Exit\n"))
+authenticator = Authenticator(npsso)
+request_builder = RequestBuilder(authenticator)
+search = Search(request_builder)
+trophyTitles = TrophyTitles(request_builder, client.account_id)
+account_id = client.account_id
 
 
 def show_library_data(choice):
@@ -73,17 +75,18 @@ def trophies_for_game(requestBuilder, accountID):
     title_id = search.get_title_id(title)[1]
     np_com_id = trophyTitles.get_np_communication_id(requestBuilder, title_id, accountID)
     trophy_builder = TrophyBuilder(requestBuilder, np_com_id)
-    earned_trophies = trophy_builder.earned_game_trophies_with_metadata(accountID, "PS4", "default", 9999)
+    earned_trophies = trophy_builder.earned_game_trophies_with_metadata(accountID, "PS4", "default", 500)
     for trophy in earned_trophies:
         if trophy.earned:
             print(trophy)
 
 
-authenticator = Authenticator(npsso)
-request_builder = RequestBuilder(authenticator)
-search = Search(request_builder)
-trophyTitles = TrophyTitles(request_builder, client.account_id)
-account_id = client.account_id
 games_data, games_titles = list_games()
 
-show_library_data(choice)
+while True:
+    print("Your nick is: " + client.online_id + "\n")
+    choice = int(input("1 - Show my games\n" +
+                       "2 - Show trophies for specific game\n" +
+                       "3 - Exit\n"))
+
+    show_library_data(choice)
