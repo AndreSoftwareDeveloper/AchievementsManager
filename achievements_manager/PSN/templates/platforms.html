@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Website</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            min-height: 100vh;
+        }
+        #sidebar {
+            background-color: #333;
+            color: #fff;
+            width: 200px;
+            padding: 20px;
+        }
+        #content {
+            flex-grow: 1;
+            padding: 20px;
+        }
+        #sidebar a {
+            text-decoration: none;
+            color: #fff;
+            display: block;
+            margin-bottom: 10px;
+            padding: 5px;
+            transition: background-color 0.3s;
+        }
+        #sidebar a:hover {
+            background-color: #555;
+        }
+        .images-container {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+        }
+        .image {
+            text-align: center;
+        }
+        .image img {
+            max-width: 100%;
+            border-radius: 5px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+        .image p {
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div id="sidebar">
+        <a href="#">Games</a>
+        <a href="#" class="active">Platforms</a>
+    </div>
+    <div id="content">
+        <h1>Welcome to My Website</h1>
+        <div class="images-container">
+            <div class="image">
+                <img src="templates/PSN.png" alt="PlayStation Network">
+                <p>Platform 1</p>
+            </div>
+            <div class="image">
+                <img src="platform2.jpg" alt="Platform 2">
+                <p>Platform 2</p>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
