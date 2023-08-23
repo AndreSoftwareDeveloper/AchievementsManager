@@ -73,13 +73,13 @@ class PlayStation:
     def list_games(self):
         data = []
         titles = []
-        for trophy_title in client.trophy_titles(limit=None):
+        for trophy_title in self.client.trophy_titles(limit=None):
             titles.append(trophy_title.title_name)
             data.append(trophy_title)
         return data, titles
 
 
-    def trophies_for_game(requestBuilder, accountID):
+    def trophies_for_game(self, requestBuilder, accountID):
         title = input("Enter game title: ")
         title_id = search.get_title_id(title)[1]
         np_com_id = trophyTitles.get_np_communication_id(requestBuilder, title_id, accountID)
@@ -90,12 +90,19 @@ class PlayStation:
                 print(trophy)
 
 
-    games_data, games_titles = list_games(self)
+    def test(self):
+        games_data, games_titles = self.list_games()
 
-    while True:
-        print("Your nick is: " + client.online_id + "\n")
-        choice = int(input("1 - Show my games\n" +
+        while True:
+            print("Your nick is: " + client.online_id + "\n")
+            option = int(input("1 - Show my games\n" +
                            "2 - Show trophies for specific game\n" +
                            "3 - Exit\n"))
 
-        show_library_data(choice)
+            show_library_data(option)
+
+
+    def test2(self):
+        return "dupa"
+
+
