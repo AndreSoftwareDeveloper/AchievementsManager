@@ -23,10 +23,21 @@
                 </a>
 
                 <form action = "" method = "post">
-                    {% csrf_token %}
-                    {{ PsnSignInForm }}
+
 
                     {{ psn.obtain_npsso }}
+
+
+
+
+                    {% if psn.obtain_npsso != "ERROR" %}
+                        {% csrf_token %}
+                        {{ psn_form }}
+                    {% endif %}
+
+
+                    {{ npsso }}
+
                     <input type="submit" value=Submit>
                 </form>
             </div>

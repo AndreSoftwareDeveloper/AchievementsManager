@@ -25,8 +25,8 @@ class PlayStation:
             npsso_bytes = npssoSave.readline()
             npsso = npsso_bytes.decode('utf-8')
         npssoSave.close()
-        if npsso == "xGhVVqUSyW8Q15f0GrhXqdN6fwbnZ7KWZf54FLeaCFz87edUfaTKtA2KSHdmFLo7":
-            return "ok"
+        if npsso is "":
+            return "ERROR"
         else:
             return npsso
 
