@@ -21,7 +21,14 @@
                     <img src="{% static 'PSN/images/PSN.png' %}" alt="PlayStation Network">
                     <p>Platform 1</p>
                 </a>
-                {% dupa = PlayStation()%}
+
+                <form action = "" method = "post">
+                    {% csrf_token %}
+                    {{ PsnSignInForm }}
+
+                    {{ psn.obtain_npsso }}
+                    <input type="submit" value=Submit>
+                </form>
             </div>
 
             <div class="image">

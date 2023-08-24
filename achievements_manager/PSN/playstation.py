@@ -1,7 +1,7 @@
 import sys
 from enum import Enum
 
-from django.templatetags.static import static
+from django.contrib.staticfiles.storage import staticfiles_storage
 
 import psnawp_api
 from psnawp_api import PSNAWP
@@ -16,28 +16,34 @@ from psnawp_api.models.search import Search
 
 class PlayStation:
 
-    @staticmethod
-    def debug():
-        return "dupa"
+    def __init__(self):
+        pass
 
-    try:
-        # psnawp = input("Enter valid npsso code: ")        #TODO: input powinien być w pętli wykonującej się dopóki użytkownik poda prawidłowy npsso
-        # with open(
-        #         static("PSN/npssoSave.txt")) as npssoSave:  # TODO: guide for user how to obtain NPSSO
-        #     npsso = npssoSave.readline()
-        # npssoSave.close()
-        npsso = "xGhVVqUSyW8Q15f0GrhXqdN6fwbnZ7KWZf54FLeaCFz87edUfaTKtA2KSHdmFLo7"
-        psnawp = PSNAWP(npsso)
-    except errorMessage:
-        print(errorMessage)
-        sys.exit()
 
-    client = psnawp.me()
-    authenticator = Authenticator(npsso)
-    request_builder = RequestBuilder(authenticator)
-    search = Search(request_builder)
-    trophyTitles = TrophyTitles(request_builder, client.account_id)
-    account_id = client.account_id
+    def obtain_npsso(self):
+        with staticfiles_storage.open('PSN/npssoSave.txt') as npssoSave:
+            npsso_bytes = npssoSave.readline()
+            npsso = npsso_bytes.decode('utf-8')
+        npssoSave.close()
+        if npsso == "xGhVVqUSyW8Q15f0GrhXqdN6fwbnZ7KWZf54FLeaCFz87edUfaTKtA2KSHdmFLo7":
+            return "ok"
+        else:
+            return npsso
+
+    # try:
+    #     psnawp = input("Enter valid npsso code: ")
+    #     npsso = "xGhVVqUSyW8Q15f0GrhXqdN6fwbnZ7KWZf54FLeaCFz87edUfaTKtA2KSHdmFLo7"
+    #     psnawp = PSNAWP(npsso)
+    # except errorMessage:
+    #     print(errorMessage)
+    #     sys.exit()
+    #
+    # client = psnawp.me()
+    # authenticator = Authenticator(npsso)
+    # request_builder = RequestBuilder(authenticator)
+    # search = Search(request_builder)
+    # trophyTitles = TrophyTitles(request_builder, client.account_id)
+    # account_id = client.account_id
 
 
     def show_library_data(choice):
