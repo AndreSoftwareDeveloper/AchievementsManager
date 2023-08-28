@@ -24,20 +24,16 @@
 
                 <form action = "" method = "post">
 
-
-
-                    {% if psn.obtain_npsso != "ERROR" %}
+                    {% if psn.obtain_npsso != "NO SAVE" %}
+                        Enter NPSSO token:
                         {% csrf_token %}
                         {{ psn_form }}
+                        <input type="submit" value=Submit>
                     {% endif %}
 
-
-                    {{ npsso }}
-
-                    <input type="submit" value=Submit>
                 </form>
-            </div>
 
+            </div>
             <div class="image">
                 <p>Platform 2</p>
             </div>

@@ -2,4 +2,8 @@ from django import forms
 
 
 class PsnSignInForm(forms.Form):
-    npsso = forms.CharField(max_length = 64, min_length=64)
+    npsso = forms.CharField(
+        max_length = 64,
+        min_length = 64,
+        label = ''
+    )

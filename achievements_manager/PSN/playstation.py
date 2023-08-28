@@ -17,7 +17,11 @@ from psnawp_api.models.search import Search
 class PlayStation:
 
     def __init__(self):
-        pass
+        self.client = None
+        self.request_builder = None
+        self.search = None
+        self.trophyTitles = None
+        self.account_id = None
 
 
     def obtain_npsso(self):
@@ -26,24 +30,27 @@ class PlayStation:
             npsso = npsso_bytes.decode('utf-8')
         npssoSave.close()
         if npsso is "":
-            return "ERROR"
+            return "NO SAVE"
         else:
             return npsso
 
-    # try:
-    #     psnawp = input("Enter valid npsso code: ")
-    #     npsso = "xGhVVqUSyW8Q15f0GrhXqdN6fwbnZ7KWZf54FLeaCFz87edUfaTKtA2KSHdmFLo7"
-    #     psnawp = PSNAWP(npsso)
-    # except errorMessage:
-    #     print(errorMessage)
-    #     sys.exit()
-    #
-    # client = psnawp.me()
-    # authenticator = Authenticator(npsso)
-    # request_builder = RequestBuilder(authenticator)
-    # search = Search(request_builder)
-    # trophyTitles = TrophyTitles(request_builder, client.account_id)
-    # account_id = client.account_id
+    def login(npsso):
+        try:
+            psnawp = PSNAWP(npsso)
+            client = psnawp.me()
+            authenticator = Authenticator(npsso)
+            request_builder = RequestBuilder(authenticator)
+            search = Search(request_builder)
+            trophy_titles = TrophyTitles(request_builder, client.account_id)
+            account_id = client.account_id
+
+            self.client = client
+            self.request_builder = request_builder
+            self.search = search
+            self.trophyTitles = trophy_titles
+            self.account_id = account_id
+        except Exception as e:
+            print(f"Error while signing up to PlayStation Network: : {str(e)}")
 
 
     def show_library_data(choice):
@@ -106,9 +113,3 @@ class PlayStation:
                            "3 - Exit\n"))
 
             show_library_data(option)
-
-
-    def test2(self):
-        return "dupa"
-
-
