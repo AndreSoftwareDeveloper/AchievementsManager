@@ -34,7 +34,7 @@ class PlayStation:
         else:
             return npsso
 
-    def login(npsso):
+    def login(self, npsso):
         try:
             psnawp = PSNAWP(npsso)
             client = psnawp.me()
@@ -66,10 +66,14 @@ class PlayStation:
 
 
     def show_my_games(self):
-        for trophy_title in client.trophy_titles(limit=None):
+        my_games = ""
+        for trophy_title in self.client.trophy_titles(limit=None):
+            my_games += trophy_title.title_name
             print(trophy_title.title_name)
+
             print(str(trophy_title.progress) + "%\t" +
                   sum_trophies(trophy_title, True) + '/' + sum_trophies(trophy_title, False) + "\n")
+            return my_games
 
 
     def sum_trophies(title, is_earned: bool):

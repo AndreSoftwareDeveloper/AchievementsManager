@@ -2,5 +2,6 @@ from django.urls import path
 from . import views
 
 urlpatterns = [
-    path('PSN/', views.PSN, name='PSN'),
+    path('platforms/', views.platforms, name='platforms'),
+    path('platforms/PSN', views.PSN, name='PSN'),
 ]

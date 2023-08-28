@@ -5,5 +5,6 @@ class PsnSignInForm(forms.Form):
     npsso = forms.CharField(
         max_length = 64,
         min_length = 64,
-        label = ''
+        label = '',
+        widget = forms.TextInput ( attrs={'placeholder': 'Enter NPSSO token'} )
     )
