@@ -35,8 +35,16 @@ def platforms(request):
 def PSN(request):
     global psn
     template = loader.get_template('PSN.html')
-    my_games = psn.list_games()
+    games = psn.show_my_games()
+
+    trophies_for_game = psn.trophies_for_game("Horizon Zero Dawn", psn.request_builder, psn.account_id)
+    trophies_data = [[] for _ in range(len(trophies_for_game))]
+
+        dupa.append(trophy) #.trophy_name trophy_type trophy_detail trophy_icon_url earned_date_time trophy_rarity
+
+
     context = {
-        'my_games': my_games
+        'games': games,
+        'dupa': dupa
     }
     return HttpResponse(template.render(context, request))

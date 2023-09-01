@@ -65,18 +65,7 @@ class PlayStation:
                 print("There is no such option!")
 
 
-    def show_my_games(self):
-        my_games = ""
-        for trophy_title in self.client.trophy_titles(limit=None):
-            my_games += trophy_title.title_name
-            print(trophy_title.title_name)
-
-            print(str(trophy_title.progress) + "%\t" +
-                  sum_trophies(trophy_title, True) + '/' + sum_trophies(trophy_title, False) + "\n")
-            return my_games
-
-
-    def sum_trophies(title, is_earned: bool):
+    def sum_trophies(self, title, is_earned: bool):
         if is_earned:
             trophy_status = title.earned_trophies
         else:
@@ -87,24 +76,34 @@ class PlayStation:
                    trophy_status.platinum)
 
 
+    def show_my_games(self):
+        my_games = []
+        for trophy_title in self.client.trophy_titles(limit=None):
+            game_title = trophy_title.title_name
+            progress =  str(trophy_title.progress) + "% " + self.sum_trophies(trophy_title, True) + '/' + self.sum_trophies(trophy_title, False)
+            my_games.append(game_title + " " + progress)
+        return my_games
+
+
     def list_games(self):
         data = []
         titles = []
         for trophy_title in self.client.trophy_titles(limit=None):
             titles.append(trophy_title.title_name)
             data.append(trophy_title)
-        return data, titles
+        return titles, data
 
 
-    def trophies_for_game(self, requestBuilder, accountID):
-        title = input("Enter game title: ")
-        title_id = search.get_title_id(title)[1]
-        np_com_id = trophyTitles.get_np_communication_id(requestBuilder, title_id, accountID)
+    def trophies_for_game(self, title: str, requestBuilder, accountID):
+        title_id = self.search.get_title_id(title)[1]
+        np_com_id = self.trophyTitles.get_np_communication_id(requestBuilder, title_id, accountID)
         trophy_builder = TrophyBuilder(requestBuilder, np_com_id)
         earned_trophies = trophy_builder.earned_game_trophies_with_metadata(accountID, "PS4", "default", 500)
+        trophies = []
         for trophy in earned_trophies:
             if trophy.earned:
-                print(trophy)
+                trophies.append(trophy)
+        return trophies
 
 
     def test(self):

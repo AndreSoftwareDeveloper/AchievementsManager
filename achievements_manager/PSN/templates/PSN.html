@@ -13,29 +13,17 @@
         <a href="#">Platforms</a>
     </div>
     <div id="content">
-        <h1>GAME PLATFORMS</h1>
+        <h1>PlayStation Network</h1>
         <div class="platforms-container">
-
             <div class="platform">
-                <a href="PSN">
-                    <img src="{% static 'PSN/images/PSN.png' %}" alt="PlayStation Network">
-                    <p>Platform 1</p>
-                </a>
+                <ul>
+                    {% for game in games %}
+                        <li>{{ game }}</li>
+                    {% endfor %}
 
-                <form action = "" method = "post">
 
-                    {% if saved_npsso != "NO SAVE" %}
-                        {% csrf_token %}
-                        {{ psn_form }}
-                        <br>
-                        <input type="submit" value=Submit>
-                    {% endif %}
-
-                </form>
-
-            </div>
-            <div class="image">
-                <p>Platform 2</p>
+                    {{ dupa.trophy_icon_url }}
+                </ul>
             </div>
         </div>
     </div>
