@@ -38,13 +38,21 @@ def PSN(request):
     games = psn.show_my_games()
 
     trophies_for_game = psn.trophies_for_game("Horizon Zero Dawn", psn.request_builder, psn.account_id)
-    trophies_data = [[] for _ in range(len(trophies_for_game))]
-
-        dupa.append(trophy) #.trophy_name trophy_type trophy_detail trophy_icon_url earned_date_time trophy_rarity
-
+    trophies_data = [ [] for _ in range(len(trophies_for_game)) ]
+    for i in range(0, len(trophies_for_game)):
+         trophies_data[i].append(trophies_for_game[i].trophy_name)
+         trophies_data[i].append(trophies_for_game[i].trophy_type)
+         trophies_data[i].append(trophies_for_game[i].trophy_detail)
+         trophies_data[i].append(trophies_for_game[i].trophy_icon_url)
+         trophies_data[i].append(trophies_for_game[i].earned_date_time)
+         trophies_data[i].append(trophies_for_game[i].trophy_rarity)
 
     context = {
         'games': games,
-        'dupa': dupa
+        'trophies_data': trophies_data
     }
     return HttpResponse(template.render(context, request))
+
+
+def game(request):
+    pass
