@@ -2,9 +2,21 @@ from django.http import HttpResponse
 from django.template import loader
 from .playstation import PlayStation
 from .forms import PsnSignInForm
+import json
 
 
 psn = PlayStation()
+
+def serialize_trophies(trophy):
+    return {
+        'trophy_name': trophy.trophy_name,
+        'trophy_type': trophy.trophy_type,
+        'trophy_detail': trophy.trophy_detail,
+        'trophy_icon_url': trophy.trophy_icon_url,
+        'earned_date_time': trophy.earned_date_time,
+        'trophy_rarity': trophy.trophy_rarity,
+    }
+
 
 def platforms(request):
     global psn
@@ -40,13 +52,14 @@ def PSN(request):
     trophies_for_game = psn.trophies_for_game("Horizon Zero Dawn", psn.request_builder, psn.account_id)
     trophies_data = [ [] for _ in range(len(trophies_for_game)) ]
     for i in range(0, len(trophies_for_game)):
-         trophies_data[i].append(trophies_for_game[i].trophy_name)
-         trophies_data[i].append(trophies_for_game[i].trophy_type)
-         trophies_data[i].append(trophies_for_game[i].trophy_detail)
-         trophies_data[i].append(trophies_for_game[i].trophy_icon_url)
-         trophies_data[i].append(trophies_for_game[i].earned_date_time)
-         trophies_data[i].append(trophies_for_game[i].trophy_rarity)
+         trophies_data[i].append( str(trophies_for_game[i].trophy_name) )
+         trophies_data[i].append( str(trophies_for_game[i].trophy_type))
+         trophies_data[i].append( str(trophies_for_game[i].trophy_detail))
+         trophies_data[i].append( str(trophies_for_game[i].trophy_icon_url))
+         trophies_data[i].append( str(trophies_for_game[i].earned_date_time))
+         trophies_data[i].append( str(trophies_for_game[i].trophy_rarity))
 
+    request.session['trophies_data'] = trophies_data
     context = {
         'games': games,
         'trophies_data': trophies_data
@@ -55,4 +68,10 @@ def PSN(request):
 
 
 def game(request):
-    pass
+    template = loader.get_template('game.html')
+    trophies_data = request.session.get('trophies_data', [])
+
+    context = {
+        'trophies_data': trophies_data
+    }
+    return HttpResponse(template.render(context, request))

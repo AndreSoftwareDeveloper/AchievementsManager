@@ -17,13 +17,13 @@
         <div class="platforms-container">
             <div class="platform">
                 <ul>
-                    {% for game in games %}
-                        <li><a href="game"> {{ game }} </a></li>
-                    {% endfor %}
-                </ul>
-                <ul>
                     {% for trophy_data in trophies_data %}
-                        <li> {{ trophy_data }} </li>
+                        <ul>
+                            {% for dupa in trophy_data %}
+                                <li> {{ dupa }} </li>
+                            {% endfor %}
+                        </ul>
+                        <br><br>
                     {% endfor %}
                 </ul>
             </div>
