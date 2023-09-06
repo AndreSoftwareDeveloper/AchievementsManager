@@ -67,7 +67,7 @@ def PSN(request):
     return HttpResponse(template.render(context, request))
 
 
-def game(request):
+def game(request, game_name):
     template = loader.get_template('game.html')
     trophies_data = request.session.get('trophies_data', [])
 
