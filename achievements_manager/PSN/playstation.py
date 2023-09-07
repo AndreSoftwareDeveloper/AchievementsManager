@@ -75,15 +75,13 @@ class PlayStation:
                    trophy_status.gold +
                    trophy_status.platinum)
 
-
     def show_my_games(self):
-        my_games = []
+        my_games = {}
         for trophy_title in self.client.trophy_titles(limit=None):
             game_title = trophy_title.title_name
-            progress =  str(trophy_title.progress) + "% " + self.sum_trophies(trophy_title, True) + '/' + self.sum_trophies(trophy_title, False)
-            my_games.append(game_title + " " + progress)
+            progress = f"{trophy_title.progress}% {self.sum_trophies(trophy_title, True)}/{self.sum_trophies(trophy_title, False)}"
+            my_games[game_title] = progress
         return my_games
-
 
     def list_games(self):
         data = []

@@ -7,6 +7,13 @@
     {% load static %}
     <link rel="stylesheet" type="text/css" href="{% static 'PSN/style.css' %}">
 </head>
+
+<script>
+    function saveTitleToSession(game) {
+        sessionStorage.setItem('selected_game', game);
+    }
+</script>
+
 <body>
     <div id="sidebar">
         <a href="#" class="active">Games</a>
@@ -17,11 +24,10 @@
         <div class="platforms-container">
             <div class="platform">
                 <ul>
-                    {% for game in games %}
-                        <li><a href="{% url 'game' game %}"> {{ game }} </a></li>
+                    {% for title, progress in games.items %}
+                        <li><a href='game' onclick="saveTitleToSession(' {{ title }} ')"> {{ title }} {{ progress }} </a></li>
                     {% endfor %}
                 </ul>
-
             </div>
         </div>
     </div>
