@@ -48,30 +48,32 @@ def PSN(request):
     global psn
     template = loader.get_template('PSN.html')
     games = psn.show_my_games()
-
-    trophies_for_game = psn.trophies_for_game("Horizon Zero Dawn", psn.request_builder, psn.account_id)
-    trophies_data = [ [] for _ in range(len(trophies_for_game)) ]
-    for i in range(0, len(trophies_for_game)):
-         trophies_data[i].append( str(trophies_for_game[i].trophy_name) )
-         trophies_data[i].append( str(trophies_for_game[i].trophy_type))
-         trophies_data[i].append( str(trophies_for_game[i].trophy_detail))
-         trophies_data[i].append( str(trophies_for_game[i].trophy_icon_url))
-         trophies_data[i].append( str(trophies_for_game[i].earned_date_time))
-         trophies_data[i].append( str(trophies_for_game[i].trophy_rarity))
-
-    request.session['trophies_data'] = trophies_data
     context = {
-        'games': games,
-        'trophies_data': trophies_data
+        'games': games
     }
     return HttpResponse(template.render(context, request))
 
 
 def game(request):
     template = loader.get_template('game.html')
-    trophies_data = request.session.get('trophies_data', [])
+    selected_game = str( request.session.get('selected_game') )
+
+    session_values = request.session.items()
+    for key, value in session_values:
+        print(f'Klucz: {key}, Wartość: {value}')
+
+    trophies_for_game = psn.trophies_for_game("Horizon Zero Dawn", psn.request_builder, psn.account_id)
+    trophies_data = [[] for _ in range(len(trophies_for_game))]
+    for i in range(0, len(trophies_for_game)):
+        trophies_data[i].append(str(trophies_for_game[i].trophy_name))
+        trophies_data[i].append(str(trophies_for_game[i].trophy_type))
+        trophies_data[i].append(str(trophies_for_game[i].trophy_detail))
+        trophies_data[i].append(str(trophies_for_game[i].trophy_icon_url))
+        trophies_data[i].append(str(trophies_for_game[i].earned_date_time))
+        trophies_data[i].append(str(trophies_for_game[i].trophy_rarity))
 
     context = {
-        'trophies_data': trophies_data
+        'trophies_data': trophies_data,
+        'dupa': selected_game
     }
     return HttpResponse(template.render(context, request))

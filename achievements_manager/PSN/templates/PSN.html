@@ -9,8 +9,9 @@
 </head>
 
 <script>
-    function saveTitleToSession(game) {
-        sessionStorage.setItem('selected_game', game);
+    function send_value(game) {
+        document.getElementById('selected_game_input').value = game;
+        document.getElementById('myForm').submit();
     }
 </script>
 
@@ -28,6 +29,10 @@
                         <li><a href='game' onclick="saveTitleToSession(' {{ title }} ')"> {{ title }} {{ progress }} </a></li>
                     {% endfor %}
                 </ul>
+                <form id="myForm" method="POST" action="game">
+                    <input type="hidden" id="selected_game_input" name="selected_game" value="">
+                    <input type="submit" value="Wyślij" style="display: none;">
+                </form>
             </div>
         </div>
     </div>
