@@ -9,7 +9,7 @@
 </head>
 
 <script>
-    function send_value(game) {
+    function sendValue(game) {
         document.getElementById('selected_game_input').value = game;
         document.getElementById('myForm').submit();
     }
@@ -26,7 +26,7 @@
             <div class="platform">
                 <ul>
                     {% for title, progress in games.items %}
-                        <li><a href='game' onclick="saveTitleToSession(' {{ title }} ')"> {{ title }} {{ progress }} </a></li>
+                        <li onclick="sendValue(' {{ title }} ')"> {{ title }} {{ progress }} </li>
                     {% endfor %}
                 </ul>
                 <form id="myForm" method="POST" action="game">

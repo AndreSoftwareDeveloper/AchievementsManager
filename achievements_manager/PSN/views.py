@@ -1,7 +1,11 @@
 from django.http import HttpResponse
 from django.template import loader
+from django.shortcuts import render
+from django.views.decorators.csrf import csrf_exempt
+
 from .playstation import PlayStation
 from .forms import PsnSignInForm
+
 import json
 
 
@@ -54,15 +58,12 @@ def PSN(request):
     return HttpResponse(template.render(context, request))
 
 
+@csrf_exempt
 def game(request):
     template = loader.get_template('game.html')
-    selected_game = str( request.session.get('selected_game') )
+    selected_game = request.POST.get('selected_game', None)
 
-    session_values = request.session.items()
-    for key, value in session_values:
-        print(f'Klucz: {key}, Wartość: {value}')
-
-    trophies_for_game = psn.trophies_for_game("Horizon Zero Dawn", psn.request_builder, psn.account_id)
+    trophies_for_game = psn.trophies_for_game(selected_game, psn.request_builder, psn.account_id)
     trophies_data = [[] for _ in range(len(trophies_for_game))]
     for i in range(0, len(trophies_for_game)):
         trophies_data[i].append(str(trophies_for_game[i].trophy_name))
