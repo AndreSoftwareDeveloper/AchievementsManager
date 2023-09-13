@@ -6,6 +6,10 @@ body {
     min-height: 100vh;
 }
 
+#content{
+    width: 100%;
+}
+
 #sidebar {
     background-color: #333;
     color: #fff;
@@ -53,9 +57,18 @@ body {
 
 .top-menu{
     width: 10%;
-    height: 10%;
+    height: 7%;
+    display: flex;
     float: right;
     background-color: #333;
-    text-align: center;
+    justify-content: center;
+    align-items: center;
+    margin-right: 5%;
+    margin-left: 5%;
+}
 
+.top-menu a:link{
+    color: white;
+    text-decoration: none;
+    font-size: 20px;
 }
