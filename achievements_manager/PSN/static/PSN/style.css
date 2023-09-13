@@ -50,3 +50,12 @@ body {
 .active{
     background-color: #949997;
 }
+
+.top-menu{
+    width: 10%;
+    height: 10%;
+    float: right;
+    background-color: #333;
+    text-align: center;
+
+}
