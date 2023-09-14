@@ -66,11 +66,12 @@ body {
     margin-left: 3%;
 }
 
-.top-menu a:link, a:visited, a:hover, a:active{
+.top-menu{
     color: white;
     text-decoration: none;
     font-weight: bold;
     font-size: 30px;
+    cursor: default;
 }
 
 #log_in_form{

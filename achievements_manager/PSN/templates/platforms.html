@@ -8,14 +8,19 @@
     <link rel="stylesheet" type="text/css" href="{% static 'PSN/style.css' %}">
 </head>
 <body>
+    <script>
+        function show_login_form(){
+            document.getElementById("login_form").style.display = "block";
+        }
+    </script>
     <div id="sidebar">
         <a href="#">Games</a>
         <a href="#" class="active">Platforms</a>
     </div>
 
     <div id="content">
-        <span class="top-menu"><a href="#" id="login-button">LOG IN</a></span>
-        <span class="top-menu"><a href="#" id="signup-button">SIGN UP</a></span>
+        <span class="top-menu" id="login-button" onclick="show_login_form()">LOG IN</span>
+        <span class="top-menu" id="registration-button">SIGN UP</span>
         <h1>GAME PLATFORMS</h1>
         <div class="platforms-container">
 
