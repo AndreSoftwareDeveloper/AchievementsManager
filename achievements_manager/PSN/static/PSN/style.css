@@ -63,12 +63,16 @@ body {
     background-color: #333;
     justify-content: center;
     align-items: center;
-    margin-right: 5%;
-    margin-left: 5%;
+    margin-left: 3%;
 }
 
-.top-menu a:link{
+.top-menu a:link, a:visited, a:hover, a:active{
     color: white;
     text-decoration: none;
-    font-size: 20px;
+    font-weight: bold;
+    font-size: 30px;
+}
+
+#log_in_form{
+    display: none;
 }
