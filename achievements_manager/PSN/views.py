@@ -1,17 +1,15 @@
 from django.http import HttpResponse
 from django.template import loader
-from django.shortcuts import render
 from django.views.decorators.csrf import csrf_exempt
 
-from .playstation import PlayStation
 from .forms import PsnSignInForm
-
-import json
-
+from .playstation import PlayStation
+from .models import User
 
 psn = PlayStation()
 
-def serialize_trophies(trophy):
+
+def serialize_trophies(trophy):  # dead code? TODO: check this and eventually delete
     return {
         'trophy_name': trophy.trophy_name,
         'trophy_type': trophy.trophy_type,
@@ -37,6 +35,16 @@ def platforms(request):
         psn.login(npsso)
     else:
         npsso = ''
+
+    if request.method == 'POST':
+        register = request.POST.get('register', '')
+        if register == 'Submit':
+            nick = request.POST.get('nick', '')
+            email = request.POST.get('email', '')
+            password = request.POST.get('password', '')
+            user = User(nick=nick, email=email, encrypted_password=password)
+            user.encrypted_password = user.set_password(password)
+            user.save()
 
     context = {
         'psn': psn,
@@ -75,6 +83,6 @@ def game(request):
 
     context = {
         'trophies_data': trophies_data,
-        'dupa': selected_game
+        'dupa': selected_game  # dead code?
     }
     return HttpResponse(template.render(context, request))

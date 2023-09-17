@@ -8,22 +8,15 @@
     <link rel="stylesheet" type="text/css" href="{% static 'PSN/style.css' %}">
 </head>
 <body>
-    <script>
-        function show_login_form(){
-            document.getElementById("login_form").style.display = "block";
-        }
-    </script>
     <div id="sidebar">
         <a href="#">Games</a>
         <a href="#" class="active">Platforms</a>
     </div>
-
     <div id="content">
-        <span class="top-menu" id="login-button" onclick="show_login_form()">LOG IN</span>
-        <span class="top-menu" id="registration-button">SIGN UP</span>
+        <span class="top-menu" id="login_button" onclick="show_login_form()">LOG IN</span>
+        <span class="top-menu" id="registration_button" onclick="show_sign_up_form()">SIGN UP</span>
         <h1>GAME PLATFORMS</h1>
         <div class="platforms-container">
-
             <div class="platform">
                 <a href="PSN">
                     <img src="{% static 'PSN/images/PSN.png' %}" alt="PlayStation Network">
@@ -39,15 +32,48 @@
                     {% endif %}
                 </form>
                 <br><br><br>
-                <div id="log_in_form">
+                <div id="log_in_form" style="display: none;">
                     <form action = "" method = "POST">
                         <input type="text" placeholder="nick">  <br>
                         <input type="password" placeholder="password">  <br>
                         <input type="submit" value=Submit>
                     </form>
                 </div>
+                <div id="sign_up_form" style="display: none;">
+                   <form action = "{% url 'platforms' %}" method = "POST">
+                       {% csrf_token %}
+                       <input type = "text" name = "nick" placeholder = "nick">  <br>
+                       <input type = "email" name = "email" placeholder = "email">  <br>
+                       <input type = "password" name = "password" placeholder = "password" id = "new_password">  <br>
+                       <input type = "password" name = "repeat_password"
+                              placeholder = "repeat password" id = "repeat_password">  <br>
+                       <input type = "submit" name = "register" value = "Submit" onclick = "register()">
+                   </form>
+                </div>
             </div>
         </div>
     </div>
+
+    <script>
+        function show_login_form(){
+            document.getElementById("log_in_form").style.display = "block";
+        }
+
+        function show_sign_up_form(){
+            document.getElementById("sign_up_form").style.display = "block";
+        }
+
+        function register(){
+            var newPassword = document.getElementById("new_password").value;
+            var repeatPassword = document.getElementById("repeat_password").value;
+
+            if (newPassword !== repeatPassword) {
+                alert("Passwords do not match!");
+                return false;
+            }
+            alert("Thanks for registration. Please confirm Your account." +
+                "The confirmation link has been sent into provided email address.");
+        }
+    </script>   <!-- TODO: Implement an account verification -->
 </body>
 </html>
