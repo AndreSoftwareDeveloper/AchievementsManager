@@ -32,13 +32,16 @@
                     {% endif %}
                 </form>
                 <br><br><br>
-                <div id="log_in_form" style="display: none;">
-                    <form action = "" method = "POST">
+
+                <div id="login_form" style="display: none;">
+                    <form action = "{% url 'platforms' %}" method = "POST">
+                        {% csrf_token %}
                         <input type="text" placeholder="nick">  <br>
                         <input type="password" placeholder="password">  <br>
-                        <input type="submit" value=Submit>
+                        <input type = "submit" name = "login" value = "Login" onclick = "login()">
                     </form>
                 </div>
+
                 <div id="sign_up_form" style="display: none;">
                    <form action = "{% url 'platforms' %}" method = "POST">
                        {% csrf_token %}
@@ -47,9 +50,10 @@
                        <input type = "password" name = "password" placeholder = "password" id = "new_password">  <br>
                        <input type = "password" name = "repeat_password"
                               placeholder = "repeat password" id = "repeat_password">  <br>
-                       <input type = "submit" name = "register" value = "Submit" onclick = "register()">
+                       <input type = "submit" name = "register" value = "Sign Up" onclick = "register()">
                    </form>
                 </div>
+
             </div>
         </div>
     </div>
@@ -73,6 +77,11 @@
             }
             alert("Thanks for registration. Please confirm Your account." +
                 "The confirmation link has been sent into provided email address.");
+        }
+
+        function login(){
+            var newPassword = document.getElementById("new_password").value;
+
         }
     </script>   <!-- TODO: Implement an account verification -->
 </body>

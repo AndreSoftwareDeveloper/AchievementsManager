@@ -36,15 +36,21 @@ def platforms(request):
     else:
         npsso = ''
 
-    if request.method == 'POST':
+    if request.method == 'POST':    # registration TODO: make separate method for doing it
         register = request.POST.get('register', '')
         if register == 'Submit':
             nick = request.POST.get('nick', '')
             email = request.POST.get('email', '')
             password = request.POST.get('password', '')
-            user = User(nick=nick, email=email, encrypted_password=password)
-            user.encrypted_password = user.set_password(password)
-            user.save()
+            repeat_password = request.POST.get('repeat_password', '')
+            if password == repeat_password:
+                user = User(nick=nick, email=email, encrypted_password=password)
+                user.encrypted_password = User.encrypt_password(password)
+                user.save()
+
+            users = User.objects.all()  # listing of created User objects
+            for user in users:
+                print(user.nick, user.email, user.encrypted_password)
 
     context = {
         'psn': psn,
