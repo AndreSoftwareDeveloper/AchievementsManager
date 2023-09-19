@@ -1,17 +1,11 @@
-import sys
-from enum import Enum
-
 from django.contrib.staticfiles.storage import staticfiles_storage
 
-import psnawp_api
 from psnawp_api import PSNAWP
 from psnawp_api.core.authenticator import Authenticator
-from psnawp_api.core.psnawp_exceptions import PSNAWPAuthenticationError as errorMessage
-from psnawp_api.models.game_title import GameTitle
+from psnawp_api.models.search import Search
 from psnawp_api.models.trophies.trophy import TrophyBuilder
 from psnawp_api.models.trophies.trophy_titles import TrophyTitles
 from psnawp_api.utils.request_builder import RequestBuilder
-from psnawp_api.models.search import Search
 
 
 class PlayStation:

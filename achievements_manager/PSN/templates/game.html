@@ -15,7 +15,7 @@
     </div>
     <div id="content">
         <h1>PlayStation Network</h1>
-        <span> {{ dupa }} </span>
+        <span> {{ selected_game }} </span>
         <script>
             var selectedGame = sessionStorage.getItem('selected_game');
             console.log(selectedGame)
@@ -28,8 +28,8 @@
                 <ul>
                     {% for trophy_data in trophies_data %}
                         <ul>
-                            {% for dupa in trophy_data %}
-                                <li> {{ dupa }} </li>
+                            {% for information in trophy_data %}
+                                <li> {{ information }} </li>
                             {% endfor %}
                         </ul>
                         <br><br>

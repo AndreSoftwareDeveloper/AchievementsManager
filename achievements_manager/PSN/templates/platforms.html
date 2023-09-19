@@ -13,9 +13,10 @@
         <a href="#" class="active">Platforms</a>
     </div>
     <div id="content">
-        <span class="top-menu" id="login_button" onclick="show_login_form()">LOG IN</span>
+        <span class="top-menu" id="login_button" onclick="show_form('login_form')">LOG IN</span>
         <span class="top-menu" id="registration_button" onclick="show_sign_up_form()">SIGN UP</span>
         <h1>GAME PLATFORMS</h1>
+        <h2> {{ error_message }} </h2>
         <div class="platforms-container">
             <div class="platform">
                 <a href="PSN">
@@ -36,9 +37,9 @@
                 <div id="login_form" style="display: none;">
                     <form action = "{% url 'platforms' %}" method = "POST">
                         {% csrf_token %}
-                        <input type="text" placeholder="nick">  <br>
-                        <input type="password" placeholder="password">  <br>
-                        <input type = "submit" name = "login" value = "Login" onclick = "login()">
+                        <input type="text" name = "nick" placeholder="nick or email address">  <br>
+                        <input type="password" name = "password" placeholder="password">  <br>
+                        <input type = "submit" name = "login" value = "Submit" onclick = "login()">
                     </form>
                 </div>
 
@@ -50,7 +51,7 @@
                        <input type = "password" name = "password" placeholder = "password" id = "new_password">  <br>
                        <input type = "password" name = "repeat_password"
                               placeholder = "repeat password" id = "repeat_password">  <br>
-                       <input type = "submit" name = "register" value = "Sign Up" onclick = "register()">
+                       <input type = "submit" name = "register" value = "Submit" onclick = "register()">
                    </form>
                 </div>
 
@@ -59,8 +60,8 @@
     </div>
 
     <script>
-        function show_login_form(){
-            document.getElementById("log_in_form").style.display = "block";
+        function show_form(form_id){
+            document.getElementById(form_id).style.display = "block";
         }
 
         function show_sign_up_form(){

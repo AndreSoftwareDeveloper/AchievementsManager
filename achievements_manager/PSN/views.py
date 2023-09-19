@@ -1,6 +1,9 @@
+import bcrypt
 from django.http import HttpResponse
 from django.template import loader
 from django.views.decorators.csrf import csrf_exempt
+from django.contrib.auth import authenticate, login
+from django.db.models import Q
 
 from .forms import PsnSignInForm
 from .playstation import PlayStation
@@ -26,6 +29,7 @@ def platforms(request):
     psn_form = PsnSignInForm(request.POST)
     psn_form.fields['npsso'].error_messages = {'required': ''}
     saved_npsso = psn.obtain_npsso()
+    error_message = ""
 
     if saved_npsso != "NO SAVE":
         psn.login(saved_npsso)
@@ -36,9 +40,11 @@ def platforms(request):
     else:
         npsso = ''
 
-    if request.method == 'POST':    # registration TODO: make separate method for doing it
-        register = request.POST.get('register', '')
-        if register == 'Submit':
+    if request.method == 'POST':
+        register_form = request.POST.get('register', '')
+        login_form = request.POST.get('login', '')
+
+        if register_form == 'Submit':  # registration TODO: make separate method for doing it
             nick = request.POST.get('nick', '')
             email = request.POST.get('email', '')
             password = request.POST.get('password', '')
@@ -52,11 +58,22 @@ def platforms(request):
             for user in users:
                 print(user.nick, user.email, user.encrypted_password)
 
+        if login_form == 'Submit':  # login TODO: make separate method for doing it
+            nick = request.POST.get('nick', '')
+            password = request.POST.get('password', '')
+            logged_user = User.objects.get(Q(nick=nick) | Q(email=nick))
+            if bcrypt.checkpw(password.encode('utf-8'), logged_user.encrypted_password.encode('utf-8')):
+                login(request, logged_user)  # logged successfully
+            else:
+                error_message = "Incorrect nickname or password."  # logged unsuccessfully
+            print(logged_user)
+
     context = {
         'psn': psn,
         'psn_form': psn_form,
         'npsso': npsso,
-        'saved_npsso': saved_npsso
+        'saved_npsso': saved_npsso,
+        'error_message': error_message
     }
 
     return HttpResponse(template.render(context, request))
@@ -89,6 +106,6 @@ def game(request):
 
     context = {
         'trophies_data': trophies_data,
-        'dupa': selected_game  # dead code?
+        'selected_game': selected_game
     }
     return HttpResponse(template.render(context, request))
