@@ -54,7 +54,7 @@ def platforms(request):
                 user.encrypted_password = User.encrypt_password(password)
                 user.save()
 
-            users = User.objects.all()  # listing of created User objects
+            users = User.objects.all()  # listing of created User objects, just for debugging purpose
             for user in users:
                 print(user.nick, user.email, user.encrypted_password)
 
