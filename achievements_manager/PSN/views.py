@@ -1,26 +1,27 @@
 import bcrypt
+from django.contrib.auth import login
+from django.db.models import Q
 from django.http import HttpResponse
 from django.template import loader
 from django.views.decorators.csrf import csrf_exempt
-from django.contrib.auth import authenticate, login
-from django.db.models import Q
 
 from .forms import PsnSignInForm
-from .playstation import PlayStation
 from .models import User
+from .playstation import PlayStation
 
 psn = PlayStation()
 
 
-def serialize_trophies(trophy):  # dead code? TODO: check this and eventually delete
-    return {
-        'trophy_name': trophy.trophy_name,
-        'trophy_type': trophy.trophy_type,
-        'trophy_detail': trophy.trophy_detail,
-        'trophy_icon_url': trophy.trophy_icon_url,
-        'earned_date_time': trophy.earned_date_time,
-        'trophy_rarity': trophy.trophy_rarity,
-    }
+def register(request):
+    nick = request.POST.get('nick', '')
+    email = request.POST.get('email', '')
+    password = request.POST.get('password', '')
+    repeat_password = request.POST.get('repeat_password', '')
+    if password == repeat_password:
+        user = User(nick=nick, email=email, encrypted_password=password)
+        user.encrypted_password = User.encrypt_password(password)
+        return user
+    return 1
 
 
 def platforms(request):
@@ -40,33 +41,33 @@ def platforms(request):
     else:
         npsso = ''
 
+    users = User.objects.all()  # listing of created User objects, just for debugging purpose
+    for user in users:
+        print(user.nick, user.email, user.encrypted_password)
+
     if request.method == 'POST':
         register_form = request.POST.get('register', '')
         login_form = request.POST.get('login', '')
 
-        if register_form == 'Submit':  # registration TODO: make separate method for doing it
-            nick = request.POST.get('nick', '')
-            email = request.POST.get('email', '')
-            password = request.POST.get('password', '')
-            repeat_password = request.POST.get('repeat_password', '')
-            if password == repeat_password:
-                user = User(nick=nick, email=email, encrypted_password=password)
-                user.encrypted_password = User.encrypt_password(password)
-                user.save()
+        if register_form == 'Submit':  # registration
+            registered = register(request)
+            if registered != 1:
+                registered.save()
+            else:
+                error_message = "Passwords are not the same."
 
-            users = User.objects.all()  # listing of created User objects, just for debugging purpose
-            for user in users:
-                print(user.nick, user.email, user.encrypted_password)
 
         if login_form == 'Submit':  # login TODO: make separate method for doing it
             nick = request.POST.get('nick', '')
             password = request.POST.get('password', '')
-            logged_user = User.objects.get(Q(nick=nick) | Q(email=nick))
-            if bcrypt.checkpw(password.encode('utf-8'), logged_user.encrypted_password.encode('utf-8')):
-                login(request, logged_user)  # logged successfully
-            else:
-                error_message = "Incorrect nickname or password."  # logged unsuccessfully
-            print(logged_user)
+            try:
+                logged_user = User.objects.get(Q(nick=nick) | Q(email=nick))
+                if bcrypt.checkpw(password.encode('utf-8'), logged_user.encrypted_password.encode('utf-8')):
+                    login(request, logged_user)  # logged successfully
+                else:                            # if user exists, but password is incorrect
+                    error_message = "Incorrect nickname or password."   # TODO: should be alert in JS
+            except User.DoesNotExist:            # user does not exist
+                error_message = "User does not exist."
 
     context = {
         'psn': psn,
