@@ -12,7 +12,7 @@ from .playstation import PlayStation
 psn = PlayStation()
 
 
-def register(request):
+def sign_up(request):
     nick = request.POST.get('nick', '')
     email = request.POST.get('email', '')
     password = request.POST.get('password', '')
@@ -20,8 +20,22 @@ def register(request):
     if password == repeat_password:
         user = User(nick=nick, email=email, encrypted_password=password)
         user.encrypted_password = User.encrypt_password(password)
-        return user
+        user.save()
+        return 0
     return 1
+
+
+def log_in(request):  # TODO: refactor
+    nick = request.POST.get('nick', '')
+    password = request.POST.get('password', '')
+    try:
+        logged_user = User.objects.get(Q(nick=nick) | Q(email=nick))
+        if bcrypt.checkpw(password.encode('utf-8'), logged_user.encrypted_password.encode('utf-8')):
+            login(request, logged_user)  # logged successfully
+        else:
+            raise User.DoesNotExist
+    except User.DoesNotExist:  # user does not exist
+        return 1  # error_message = "Incorrect nickname or password."
 
 
 def platforms(request):
@@ -30,7 +44,7 @@ def platforms(request):
     psn_form = PsnSignInForm(request.POST)
     psn_form.fields['npsso'].error_messages = {'required': ''}
     saved_npsso = psn.obtain_npsso()
-    error_message = "Incorrect nickname or password."
+    error_message = ""
 
     if saved_npsso != "NO SAVE":
         psn.login(saved_npsso)
@@ -49,23 +63,10 @@ def platforms(request):
         register_form = request.POST.get('register', '')
         login_form = request.POST.get('login', '')
 
-        if register_form == 'Submit':  # registration
-            registered = register(request)
-            if registered != 1:
-                registered.save()
-            else:
-                error_message = "Passwords are not the same."
-
-        if login_form == 'Submit':  # login TODO: make separate method for doing it
-            nick = request.POST.get('nick', '')
-            password = request.POST.get('password', '')
-            try:
-                logged_user = User.objects.get(Q(nick=nick) | Q(email=nick))
-                if bcrypt.checkpw(password.encode('utf-8'), logged_user.encrypted_password.encode('utf-8')):
-                    error_message = ""
-                    login(request, logged_user)  # logged successfully
-            except User.DoesNotExist:  # user does not exist
-                pass  # only when password is correct we change error_message to empty string
+        if register_form == 'Submit' and sign_up(request) == 1:  # registration
+            error_message = "Passwords are not the same."
+        if login_form == 'Submit':                               # login
+            log_in(request)
 
     context = {
         'psn': psn,
