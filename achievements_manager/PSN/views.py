@@ -30,7 +30,7 @@ def platforms(request):
     psn_form = PsnSignInForm(request.POST)
     psn_form.fields['npsso'].error_messages = {'required': ''}
     saved_npsso = psn.obtain_npsso()
-    error_message = ""
+    error_message = "Incorrect nickname or password."
 
     if saved_npsso != "NO SAVE":
         psn.login(saved_npsso)
@@ -56,18 +56,16 @@ def platforms(request):
             else:
                 error_message = "Passwords are not the same."
 
-
         if login_form == 'Submit':  # login TODO: make separate method for doing it
             nick = request.POST.get('nick', '')
             password = request.POST.get('password', '')
             try:
                 logged_user = User.objects.get(Q(nick=nick) | Q(email=nick))
                 if bcrypt.checkpw(password.encode('utf-8'), logged_user.encrypted_password.encode('utf-8')):
+                    error_message = ""
                     login(request, logged_user)  # logged successfully
-                else:                            # if user exists, but password is incorrect
-                    error_message = "Incorrect nickname or password."   # TODO: should be alert in JS
-            except User.DoesNotExist:            # user does not exist
-                error_message = "User does not exist."
+            except User.DoesNotExist:  # user does not exist
+                pass  # only when password is correct we change error_message to empty string
 
     context = {
         'psn': psn,
