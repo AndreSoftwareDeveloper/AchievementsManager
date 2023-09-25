@@ -65,6 +65,7 @@ def platforms(request):
 
         if register_form == 'Submit' and sign_up(request) == 1:  # registration
             error_message = "Passwords are not the same."
+
         if login_form == 'Submit':                               # login
             log_in(request)
 
@@ -86,26 +87,31 @@ def PSN(request):
     context = {
         'games': games
     }
+
     return HttpResponse(template.render(context, request))
 
 
 @csrf_exempt
 def game(request):
-    template = loader.get_template('game.html')
     selected_game = request.POST.get('selected_game', None)
-
     trophies_for_game = psn.trophies_for_game(selected_game, psn.request_builder, psn.account_id)
-    trophies_data = [[] for _ in range(len(trophies_for_game))]
-    for i in range(0, len(trophies_for_game)):
-        trophies_data[i].append(str(trophies_for_game[i].trophy_name))
-        trophies_data[i].append(str(trophies_for_game[i].trophy_type))
-        trophies_data[i].append(str(trophies_for_game[i].trophy_detail))
-        trophies_data[i].append(str(trophies_for_game[i].trophy_icon_url))
-        trophies_data[i].append(str(trophies_for_game[i].earned_date_time))
-        trophies_data[i].append(str(trophies_for_game[i].trophy_rarity))
+
+    trophies_data = [
+        [
+            str(t.trophy_name),
+            str(t.trophy_type),
+            str(t.trophy_detail),
+            str(t.trophy_icon_url),
+            str(t.earned_date_time),
+            str(t.trophy_rarity),
+        ]
+        for t in trophies_for_game
+    ]
 
     context = {
         'trophies_data': trophies_data,
         'selected_game': selected_game
     }
-    return HttpResponse(template.render(context, request))
+
+    return HttpResponse(loader.get_template('game.html').render(context, request))
+
