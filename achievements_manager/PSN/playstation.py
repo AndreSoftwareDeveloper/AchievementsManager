@@ -16,50 +16,32 @@ class PlayStation:
         self.search = None
         self.trophyTitles = None
         self.account_id = None
+        self.trophyTitles = None
 
-
-    def obtain_npsso(self):
+    @staticmethod
+    def obtain_npsso():
         with staticfiles_storage.open('PSN/npssoSave.txt') as npssoSave:
             npsso_bytes = npssoSave.readline()
             npsso = npsso_bytes.decode('utf-8')
         npssoSave.close()
         if npsso is "":
             return "NO SAVE"
-        else:
-            return npsso
+        return npsso
 
     def login(self, npsso):
         try:
             psnawp = PSNAWP(npsso)
-            client = psnawp.me()
             authenticator = Authenticator(npsso)
-            request_builder = RequestBuilder(authenticator)
-            search = Search(request_builder)
-            trophy_titles = TrophyTitles(request_builder, client.account_id)
-            account_id = client.account_id
-
-            self.client = client
-            self.request_builder = request_builder
-            self.search = search
-            self.trophyTitles = trophy_titles
-            self.account_id = account_id
+            self.request_builder = RequestBuilder(authenticator)
+            self.client = psnawp.me()
+            self.search = Search(self.request_builder)
+            self.trophyTitles = TrophyTitles(self.request_builder, self.client.account_id)
+            self.account_id = self.client.account_id
         except Exception as e:
             print(f"Error while signing up to PlayStation Network: : {str(e)}")
 
-
-    def show_library_data(choice):
-        match choice:
-            case 1:
-                show_my_games()
-            case 2:
-                trophies_for_game(request_builder, account_id)
-            case 3:
-                exit()
-            case _:
-                print("There is no such option!")
-
-
-    def sum_trophies(self, title, is_earned: bool):
+    @staticmethod
+    def sum_trophies(title, is_earned: bool):
         if is_earned:
             trophy_status = title.earned_trophies
         else:
@@ -73,18 +55,10 @@ class PlayStation:
         my_games = {}
         for trophy_title in self.client.trophy_titles(limit=None):
             game_title = trophy_title.title_name
-            progress = f"{trophy_title.progress}% {self.sum_trophies(trophy_title, True)}/{self.sum_trophies(trophy_title, False)}"
+            progress = f"{trophy_title.progress}% {self.sum_trophies(trophy_title, True)} / " \
+                       f"{self.sum_trophies(trophy_title, False)}"
             my_games[game_title] = progress
         return my_games
-
-    def list_games(self):
-        data = []
-        titles = []
-        for trophy_title in self.client.trophy_titles(limit=None):
-            titles.append(trophy_title.title_name)
-            data.append(trophy_title)
-        return titles, data
-
 
     def trophies_for_game(self, title: str, requestBuilder, accountID):
         title_id = self.search.get_title_id(title)[1]
@@ -97,14 +71,11 @@ class PlayStation:
                 trophies.append(trophy)
         return trophies
 
-
-    def test(self):
-        games_data, games_titles = self.list_games()
-
-        while True:
-            print("Your nick is: " + client.online_id + "\n")
-            option = int(input("1 - Show my games\n" +
-                           "2 - Show trophies for specific game\n" +
-                           "3 - Exit\n"))
-
-            show_library_data(option)
+    def show_library_data(self, choice):
+        match choice:
+            case 1:
+                choice.show_my_games()
+            case 2:
+                choice.trophies_for_game(self.request_builder, self.account_id)
+            case 3:
+                exit()

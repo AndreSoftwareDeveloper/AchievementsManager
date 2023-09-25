@@ -25,17 +25,23 @@ def sign_up(request):
     return 1
 
 
-def log_in(request):  # TODO: refactor
+def log_in(request):
     nick = request.POST.get('nick', '')
     password = request.POST.get('password', '')
     try:
         logged_user = User.objects.get(Q(nick=nick) | Q(email=nick))
         if bcrypt.checkpw(password.encode('utf-8'), logged_user.encrypted_password.encode('utf-8')):
-            login(request, logged_user)  # logged successfully
-        else:
-            raise User.DoesNotExist
-    except User.DoesNotExist:  # user does not exist
-        return 1  # error_message = "Incorrect nickname or password."
+            login(request, logged_user)
+            return 0  # logged successfully
+    except User.DoesNotExist:
+        return 1
+    return 1
+
+
+def list_users():
+    users = User.objects.all()
+    for user in users:
+        print(user.nick, user.email, user.encrypted_password)
 
 
 def platforms(request):
@@ -55,9 +61,7 @@ def platforms(request):
     else:
         npsso = ''
 
-    users = User.objects.all()  # listing of created User objects, just for debugging purpose
-    for user in users:
-        print(user.nick, user.email, user.encrypted_password)
+    list_users()  # for debugging purpose
 
     if request.method == 'POST':
         register_form = request.POST.get('register', '')
@@ -66,8 +70,8 @@ def platforms(request):
         if register_form == 'Submit' and sign_up(request) == 1:  # registration
             error_message = "Passwords are not the same."
 
-        if login_form == 'Submit':                               # login
-            log_in(request)
+        if login_form == 'Submit' and log_in(request) == 1:  # login
+            error_message = "Incorrect nickname or password."
 
     context = {
         'psn': psn,
@@ -84,6 +88,7 @@ def PSN(request):
     global psn
     template = loader.get_template('PSN.html')
     games = psn.show_my_games()
+
     context = {
         'games': games
     }
@@ -114,4 +119,3 @@ def game(request):
     }
 
     return HttpResponse(loader.get_template('game.html').render(context, request))
-
