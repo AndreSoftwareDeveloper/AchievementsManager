@@ -53,6 +53,10 @@ TEMPLATES = [
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
             ],
+
+            'libraries': {
+                'custom_filters': 'achievements_manager.custom_filters',
+            },
         },
     },
 ]
@@ -115,5 +119,3 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 SESSION_ENGINE = 'django.contrib.sessions.backends.db'
 SESSION_COOKIE_SECURE = False
-
-# AUTH_USER_MODEL =

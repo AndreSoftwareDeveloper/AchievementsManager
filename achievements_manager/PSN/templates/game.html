@@ -26,11 +26,13 @@
         <div class="platforms-container">
             <div class="platform">
                 <ul>
-                    {% for trophy_data in trophies_data %}
+                    {% load custom_filters %}
+                    {% for data, icon in trophies_data|zip_longest_filter:trophies_icons %}
                         <ul>
-                            {% for information in trophy_data %}
+                            {% for information in data %}
                                 <li> {{ information }} </li>
                             {% endfor %}
+                            <img src = {{ icon.0 }} >
                         </ul>
                         <br><br>
                     {% endfor %}

@@ -51,11 +51,11 @@ body {
     margin-top: 10px;
 }
 
-.active{
+.active {
     background-color: #949997;
 }
 
-.top-menu{
+.top-menu {
     width: 10%;
     height: 7%;
     display: flex;
@@ -70,11 +70,11 @@ body {
     cursor: default;
 }
 
-#login_form{
+#login_form {
     display: none;
 }
 
-#separator{
+#separator {
     width: 2px;
     background-color: black;
 }
