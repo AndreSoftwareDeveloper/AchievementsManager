@@ -108,16 +108,10 @@ def game(request):
             str(t.trophy_detail),
             str(t.earned_date_time),
             str(t.trophy_rarity),
-        ]
-        for t in trophies_for_game
+        ] for t in trophies_for_game
     ]
 
-    trophies_icons = [
-        [
-            str(t.trophy_icon_url),
-        ]
-        for t in trophies_for_game
-    ]
+    trophies_icons = [str(t.trophy_icon_url) for t in trophies_for_game]
 
     context = {
         'trophies_data': trophies_data,
