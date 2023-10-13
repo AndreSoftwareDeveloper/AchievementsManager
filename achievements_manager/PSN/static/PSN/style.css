@@ -78,3 +78,7 @@ body {
     width: 2px;
     background-color: black;
 }
+
+.flexbox_icons {
+    display: flex;
+}
