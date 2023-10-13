@@ -98,7 +98,7 @@ def PSN(request):
 
 @csrf_exempt
 def game(request):
-    selected_game = request.POST.get('selected_game', None)
+    selected_game = request.POST.get('selected_game', None)  # error may be anywhere below
     trophies_for_game = psn.trophies_for_game(selected_game, psn.request_builder, psn.account_id)
 
     trophies_data = [
