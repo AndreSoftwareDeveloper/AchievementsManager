@@ -27,9 +27,8 @@
             <div class="platform">
                 <div class="flexbox">
                     <ul>
-                    {% load custom_filters %} {% comment %} somewhere here is and error, dunno where {% comment %}
+                    {% load custom_filters %}
                     {% for data, icon in trophies_data|zip_longest_filter:trophies_icons %}
-
                             {% for information in data %}
                                 <li> {{ information }} </li>
                             {% endfor %}

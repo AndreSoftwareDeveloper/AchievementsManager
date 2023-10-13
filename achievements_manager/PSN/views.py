@@ -98,8 +98,8 @@ def PSN(request):
 
 @csrf_exempt
 def game(request):
-    selected_game = request.POST.get('selected_game', None)  # error may be anywhere below
-    trophies_for_game = psn.trophies_for_game(selected_game, psn.request_builder, psn.account_id)
+    selected_game = request.POST.get('selected_game', None)
+    trophies_for_game = psn.trophies_for_game(selected_game, psn.request_builder, psn.account_id)  # error may be here or anywhere below
 
     trophies_data = [
         [
@@ -114,8 +114,8 @@ def game(request):
     trophies_icons = [str(t.trophy_icon_url) for t in trophies_for_game]
 
     context = {
-        'trophies_data': trophies_data,
-        'trophies_icons': trophies_icons,
+        # 'trophies_data': trophies_data,
+        # 'trophies_icons': trophies_icons,
         'selected_game': selected_game
     }
 

@@ -61,21 +61,23 @@ class PlayStation:
         return my_games
 
     def trophies_for_game(self, title: str, requestBuilder, accountID):
-        title_id = self.search.get_title_id(title)[1]
-        np_com_id = self.trophyTitles.get_np_communication_id(requestBuilder, title_id, accountID)
-        trophy_builder = TrophyBuilder(requestBuilder, np_com_id)
-        earned_trophies = trophy_builder.earned_game_trophies_with_metadata(accountID, "PS4", "default", 500)
+        title_id = self.search.get_title_id(title)[1]  # error lies here
+        # np_com_id = self.trophyTitles.get_np_communication_id(requestBuilder, title_id, accountID)
+        # trophy_builder = TrophyBuilder(requestBuilder, np_com_id)
+        # earned_trophies = trophy_builder.earned_game_trophies_with_metadata(accountID, "PS4", "default", 500)
         trophies = []
-        for trophy in earned_trophies:
-            if trophy.earned:
-                trophies.append(trophy)
+        # for trophy in earned_trophies:
+        #     if trophy.earned:
+        #         trophies.append(trophy)
         return trophies
 
     def show_library_data(self, choice):
-        match choice:
-            case 1:
-                choice.show_my_games()
-            case 2:
-                choice.trophies_for_game(self.request_builder, self.account_id)
-            case 3:
-                exit()
+        if choice == 1:
+            return self.show_my_games()
+        elif choice == 2:
+            title = input("Podaj nazwę gry: ")
+            return self.trophies_for_game(title, self.request_builder, self.account_id)
+        elif choice == 3:
+            exit()
+        else:
+            return "Nieprawidłowy wybór"
