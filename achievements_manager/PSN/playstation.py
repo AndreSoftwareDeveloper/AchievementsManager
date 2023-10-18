@@ -61,6 +61,26 @@ class PlayStation:
             my_games[game_title] = progress
         return my_games
 
+    def get_game_id(game_title, api_key):
+        url = "https://api.igdb.com/v4/games"
+        headers = {
+            "Client-ID": api_key,
+            "Authorization": f"Bearer {api_key}"
+        }
+        data = f"search \"{game_title}\"; platforms:48;"
+
+        response = requests.post(url, data=data, headers=headers)
+
+        if response.status_code == 200:
+            games = response.json()
+            if games:
+                game_id = games[0]["id"]
+                return game_id
+            else:
+                return "This game cannot be found."
+        else:
+            return "Error while retrieving game's ID."
+
     def trophies_for_game(self, title: str, requestBuilder, accountID):
         title_id = self.search.get_title_id(title)[1]  # gives error, probably API is down
         np_com_id = self.trophyTitles.get_np_communication_id(requestBuilder, title_id, accountID)
