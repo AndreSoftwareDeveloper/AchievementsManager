@@ -3,6 +3,7 @@ from django.contrib.staticfiles.storage import staticfiles_storage
 
 from psnawp_api import PSNAWP
 from psnawp_api.core.authenticator import Authenticator
+from psnawp_api.core.psnawp_exceptions import PSNAWPBadRequest
 from psnawp_api.models.search import Search
 from psnawp_api.models.trophies.trophy import TrophyBuilder
 from psnawp_api.models.trophies.trophy_titles import TrophyTitles
@@ -25,7 +26,7 @@ class PlayStation:
             npsso_bytes = npssoSave.readline()
             npsso = npsso_bytes.decode('utf-8')
         npssoSave.close()
-        if npsso is "":
+        if npsso == "":
             return "NO SAVE"
         return npsso
 
@@ -61,7 +62,7 @@ class PlayStation:
             my_games[game_title] = progress
         return my_games
 
-    def get_game_id(game_title, api_key):
+    def get_game_id(self, game_title, api_key):
         url = "https://api.igdb.com/v4/games"
         headers = {
             "Client-ID": api_key,
@@ -82,7 +83,10 @@ class PlayStation:
             return "Error while retrieving game's ID."
 
     def trophies_for_game(self, title: str, requestBuilder, accountID):
-        title_id = self.search.get_title_id(title)[1]  # gives error, probably API is down
+        try:
+            title_id = self.search.get_title_id(title)[1]  # gives error, probably API is down
+        except PSNAWPBadRequest:
+            pass
         np_com_id = self.trophyTitles.get_np_communication_id(requestBuilder, title_id, accountID)
         trophy_builder = TrophyBuilder(requestBuilder, np_com_id)
         earned_trophies = trophy_builder.earned_game_trophies_with_metadata(accountID, "PS4", "default", 500)
