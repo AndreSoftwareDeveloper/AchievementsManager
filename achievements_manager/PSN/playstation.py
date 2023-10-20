@@ -68,18 +68,17 @@ class PlayStation:
         with staticfiles_storage.open('PSN/data.tsv', 'r') as games_data_table:
             games_data = csv.reader(games_data_table, delimiter='\t')
             title = title.rstrip()
-            return title
+            title = title.lstrip()
             for game_data_line in games_data:
-                if 'Horizon Zero Dawn' in game_data_line[2]:
+                if title in game_data_line[2]:
                     return game_data_line[0]
-        return "No data for provided title."
+        raise PSNAWPBadRequest
 
     def trophies_for_game(self, title: str, requestBuilder, accountID):
         try:
-            # title_id = self.search.get_title_id(title)[1]  # gives error, probably API is down
+            title_id = self.search.get_title_id(title)[1]
+        except PSNAWPBadRequest:        # if the API responsible for obtaining IDs is down, read the IDs from the table
             title_id = self.obtain_title_id(title)
-        except PSNAWPBadRequest:
-            pass
         np_com_id = self.trophyTitles.get_np_communication_id(requestBuilder, title_id, accountID)
         trophy_builder = TrophyBuilder(requestBuilder, np_com_id)
         earned_trophies = trophy_builder.earned_game_trophies_with_metadata(accountID, "PS4", "default", 500)
