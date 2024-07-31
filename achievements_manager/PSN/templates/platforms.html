@@ -83,8 +83,23 @@
 
         function login(){
             var newPassword = document.getElementById("new_password").value;
-
         }
+
+        function checkElementExistence(elementIds) {
+            for (var i = 0; i < elementIds.length; i++) {
+                var element = document.getElementById(elementIds[i]);
+                if (!element) {
+                    console.error("Element with ID '" + elementIds[i] + "' not found!");
+                }
+                else {
+                    console.log("Element with ID '" + elementIds[i] + "' works properly.");
+                }
+            }
+        }
+
+        var elementIdsToCheck = ['sidebar', 'content', 'login_button', 'separator', 'registration_button', 'login_form', 'sign_up_form'];
+        checkElementExistence(elementIdsToCheck);
+
     </script>   <!-- TODO: Implement an account verification -->
 </body>
 </html>

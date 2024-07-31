@@ -1,2 +1,4 @@
 achievements_manager/staticfiles/PSN/npssoSave.txt
 achievements_manager/db.sqlite3
+achievements_manager/__pycache__
+PSN/__pycache__

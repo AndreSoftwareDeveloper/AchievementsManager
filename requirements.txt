@@ -1,0 +1,3 @@
+Django~=5.0.7
+PSNAWP==2.1.0
+psnawp_api==2.1.0

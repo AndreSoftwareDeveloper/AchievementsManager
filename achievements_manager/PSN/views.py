@@ -38,10 +38,20 @@ def log_in(request):
     return 1
 
 
+def test_log_in_success(request):
+    nick = "vvv"
+    password = "vvv"
+    logged_user = User.objects.get(Q(nick=nick) | Q(email=nick))
+    if bcrypt.checkpw(password.encode('utf-8'), logged_user.encrypted_password.encode('utf-8')):
+        print("LOG IN TEST PASSED")
+
+
+
 def list_users():
     users = User.objects.all()
+    print("\nUsers:\n")
     for user in users:
-        print(user.nick, user.email, user.encrypted_password)
+        print(user.nick, user.email, user.encrypted_password, user.npsso_token, "\n")
 
 
 def platforms(request):
@@ -70,8 +80,13 @@ def platforms(request):
         if register_form == 'Submit' and sign_up(request) == 1:  # registration
             error_message = "Passwords are not the same."
 
-        if login_form == 'Submit' and log_in(request) == 1:  # login
+        if login_form == 'Submit' and log_in(request) == 1:  # unsuccessful login
             error_message = "Incorrect nickname or password."
+        else:
+            error_message = request.POST.get('nick', '')  # successful login
+
+        test_log_in_success(request)
+        # test_log_in_fail(request)
 
     context = {
         'psn': psn,
