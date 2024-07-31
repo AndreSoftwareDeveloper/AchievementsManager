@@ -1,16 +1,18 @@
 import csv
 
-import requests
 from django.contrib.staticfiles.storage import staticfiles_storage
 
+import psnawp_api.models.search
 from psnawp_api import PSNAWP
 from psnawp_api.core.authenticator import Authenticator
 from psnawp_api.core.psnawp_exceptions import PSNAWPBadRequest
-from psnawp_api.models.search import Search
-from psnawp_api.models.trophies.trophy import TrophyBuilder
-from psnawp_api.models.trophies.trophy_titles import TrophyTitles
-from psnawp_api.utils.request_builder import RequestBuilder
 
+
+# from psnawp_api.models.search import Search
+# from psnawp_api.models.trophies.trophy import TrophyBuilder
+# from psnawp_api.models.trophies.trophy_titles import TrophyTitles
+# from psnawp_api.utils.request_builder import RequestBuilder
+# TODO: make imports above work
 
 class PlayStation:
 
@@ -37,10 +39,11 @@ class PlayStation:
         try:
             psnawp = PSNAWP(npsso)
             authenticator = Authenticator(npsso)
-            self.request_builder = RequestBuilder(authenticator)
+            self.request_builder = psnawp_api.utils.request_builder.RequestBuilder(authenticator)
             self.client = psnawp.me()
-            self.search = Search(self.request_builder)
-            self.trophyTitles = TrophyTitles(self.request_builder, self.client.account_id)
+            self.search = psnawp_api.models.search.SearchSearch(self.request_builder)
+            self.trophyTitles = psnawp_api.models.trophies.trophy_titles.TrophyTitles(self.request_builder,
+                                                                                      self.client.account_id)
             self.account_id = self.client.account_id
         except Exception as e:
             print(f"Error while signing up to PlayStation Network: : {str(e)}")
@@ -83,11 +86,11 @@ class PlayStation:
 
         try:
             title_id = self.search.get_title_id(title)[1]
-        except PSNAWPBadRequest:        # if the API responsible for obtaining IDs is down, read the IDs from the table
+        except PSNAWPBadRequest:  # if the API responsible for obtaining IDs is down, read the IDs from the table
             title_id = self.obtain_title_id(title)
 
         np_com_id = self.trophyTitles.get_np_communication_id(requestBuilder, title_id, accountID)
-        trophy_builder = TrophyBuilder(requestBuilder, np_com_id)
+        trophy_builder = psnawp_api.models.trophies.trophy.TrophyBuilder(requestBuilder, np_com_id)
         earned_trophies = trophy_builder.earned_game_trophies_with_metadata(accountID, "PS4", "default", 500)
         trophies = []
 
