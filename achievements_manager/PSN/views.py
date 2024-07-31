@@ -17,6 +17,7 @@ def sign_up(request):
     email = request.POST.get('email', '')
     password = request.POST.get('password', '')
     repeat_password = request.POST.get('repeat_password', '')
+
     if password == repeat_password:
         user = User(nick=nick, email=email, encrypted_password=password)
         user.encrypted_password = User.encrypt_password(password)
@@ -28,11 +29,13 @@ def sign_up(request):
 def log_in(request):
     nick = request.POST.get('nick', '')
     password = request.POST.get('password', '')
+
     try:
         logged_user = User.objects.get(Q(nick=nick) | Q(email=nick))
         if bcrypt.checkpw(password.encode('utf-8'), logged_user.encrypted_password.encode('utf-8')):
             login(request, logged_user)
             return 0  # logged successfully
+
     except User.DoesNotExist:
         return 1
     return 1
@@ -42,9 +45,9 @@ def test_log_in_success(request):
     nick = "vvv"
     password = "vvv"
     logged_user = User.objects.get(Q(nick=nick) | Q(email=nick))
+
     if bcrypt.checkpw(password.encode('utf-8'), logged_user.encrypted_password.encode('utf-8')):
         print("LOG IN TEST PASSED")
-
 
 
 def list_users():

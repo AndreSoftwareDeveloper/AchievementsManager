@@ -28,6 +28,7 @@ class PlayStation:
             npsso_bytes = npssoSave.readline()
             npsso = npsso_bytes.decode('utf-8')
         npssoSave.close()
+
         if npsso == "":
             return "NO SAVE"
         return npsso
@@ -50,6 +51,7 @@ class PlayStation:
             trophy_status = title.earned_trophies
         else:
             trophy_status = title.defined_trophies
+
         return str(trophy_status.bronze +
                    trophy_status.silver +
                    trophy_status.gold +
@@ -57,6 +59,7 @@ class PlayStation:
 
     def show_my_games(self):
         my_games = {}
+
         for trophy_title in self.client.trophy_titles(limit=None):
             game_title = trophy_title.title_name
             progress = f"{trophy_title.progress}% {self.sum_trophies(trophy_title, True)} / " \
@@ -69,30 +72,39 @@ class PlayStation:
             games_data = csv.reader(games_data_table, delimiter='\t')
             title = title.rstrip()
             title = title.lstrip()
+
             for game_data_line in games_data:
                 if title in game_data_line[2]:
                     return game_data_line[0]
+
         raise PSNAWPBadRequest
 
     def trophies_for_game(self, title: str, requestBuilder, accountID):
+
         try:
             title_id = self.search.get_title_id(title)[1]
         except PSNAWPBadRequest:        # if the API responsible for obtaining IDs is down, read the IDs from the table
             title_id = self.obtain_title_id(title)
+
         np_com_id = self.trophyTitles.get_np_communication_id(requestBuilder, title_id, accountID)
         trophy_builder = TrophyBuilder(requestBuilder, np_com_id)
         earned_trophies = trophy_builder.earned_game_trophies_with_metadata(accountID, "PS4", "default", 500)
         trophies = []
+
         for trophy in earned_trophies:
             if trophy.earned:
                 trophies.append(trophy)
+
         return trophies
 
     def show_library_data(self, choice):
         match choice:
+
             case 1:
                 choice.show_my_games()
+
             case 2:
                 choice.trophies_for_game(self.request_builder, self.account_id)
+
             case 3:
                 exit()
