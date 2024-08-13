@@ -2,10 +2,11 @@ import csv
 
 from django.contrib.staticfiles.storage import staticfiles_storage
 
-from psnawp_api import PSNAWP
+from psnawp_api import PSNAWP, psnawp
 from psnawp_api.core import RequestBuilderHeaders
 from psnawp_api.core.authenticator import Authenticator
 from psnawp_api.core.psnawp_exceptions import PSNAWPBadRequest
+from psnawp_api.models import SearchDomain
 from psnawp_api.models.listing import PaginationArguments
 from psnawp_api.models.trophies.trophy_titles import TrophyTitleIterator
 
@@ -33,18 +34,20 @@ class PlayStation:
 
     def login(self, npsso):
         try:
-            psnawp = PSNAWP(npsso)
             request_builder_headers: RequestBuilderHeaders = {
                 "User-Agent": "SampleUserAgent",
                 "Accept-Language": "pl-PL",
                 "Country": "PL",
             }
+            psnawp = PSNAWP(npsso, request_builder_headers)
             authenticator = Authenticator(npsso, request_builder_headers)
             self.client = psnawp.me()
             pagination_arguments = PaginationArguments(1, 3, 10)
             self.trophyTitles = TrophyTitleIterator(authenticator,
                                                     "dupa", pagination_arguments, None)
             self.account_id = self.client.account_id
+            search_domain = SearchDomain(0, 1)
+            self.search = psnawp.search("debug", search_domain)
         except Exception as e:
             print(f"Error while signing up to PlayStation Network: : {str(e)}")
 
@@ -70,6 +73,7 @@ class PlayStation:
             my_games[game_title] = progress
         return my_games
 
+    @staticmethod
     def obtain_title_id(self, title):
         with staticfiles_storage.open('PSN/data.tsv', 'r') as games_data_table:
             games_data = csv.reader(games_data_table, delimiter='\t')
@@ -85,6 +89,7 @@ class PlayStation:
     def trophies_for_game(self, title: str, requestBuilder, accountID):
 
         try:
+            search = psnawp.search()
             title_id = self.search.get_title_id(title)[1]
         except PSNAWPBadRequest:  # if the API responsible for obtaining IDs is down, read the IDs from the table
             title_id = self.obtain_title_id(title)
