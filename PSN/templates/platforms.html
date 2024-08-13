@@ -7,15 +7,17 @@
     {% load static %}
     <link rel="stylesheet" type="text/css" href="{% static 'PSN/style.css' %}">
 </head>
+
 <body>
     <div id="sidebar">
         <a href="#">Games</a>
         <a href="#" class="active">Platforms</a>
     </div>
+
     <div id="content">
-        <span class="top-menu" id="login_button" onclick="show_form('login_form')">LOG IN</span>
+        <span class="top-menu" id="login_button" onclick="show_form('login_form', 'sign_up_form')">LOG IN</span>
         <span class="top-menu" id="separator"></span>
-        <span class="top-menu" id="registration_button" onclick="show_sign_up_form()">SIGN UP</span>
+        <span class="top-menu" id="registration_button" onclick="show_form('sign_up_form', 'login_form')">SIGN UP</span>
         <h1>GAME PLATFORMS</h1>
         <h2> {{ error_message }} </h2>
         <div class="platforms-container">
@@ -61,12 +63,9 @@
     </div>
 
     <script>
-        function show_form(form_id){
-            document.getElementById(form_id).style.display = "block";
-        }
-
-        function show_sign_up_form(){
-            document.getElementById("sign_up_form").style.display = "block";
+        function show_form(to_show, to_hide){
+            document.getElementById(to_hide).style.display = "none";
+            document.getElementById(to_show).style.display = "block";
         }
 
         function register(){

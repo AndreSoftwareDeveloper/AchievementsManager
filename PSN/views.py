@@ -1,4 +1,5 @@
 import bcrypt
+
 from django.contrib.auth import login
 from django.db.models import Q
 from django.http import HttpResponse
@@ -41,15 +42,6 @@ def log_in(request):
     return 1
 
 
-def test_log_in_success(request):
-    nick = "vvv"
-    password = "vvv"
-    logged_user = User.objects.get(Q(nick=nick) | Q(email=nick))
-
-    if bcrypt.checkpw(password.encode('utf-8'), logged_user.encrypted_password.encode('utf-8')):
-        print("LOG IN TEST PASSED")
-
-
 def list_users():
     users = User.objects.all()
     print("\nUsers:\n")
@@ -74,7 +66,7 @@ def platforms(request):
     else:
         npsso = ''
 
-    list_users()  # for debugging purpose
+    # list_users()  # for debugging purpose
 
     if request.method == 'POST':
         register_form = request.POST.get('register', '')
@@ -87,9 +79,6 @@ def platforms(request):
             error_message = "Incorrect nickname or password."
         else:
             error_message = request.POST.get('nick', '')  # successful login
-
-        test_log_in_success(request)
-        # test_log_in_fail(request)
 
     context = {
         'psn': psn,
