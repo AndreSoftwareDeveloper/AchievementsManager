@@ -1,3 +1,4 @@
-Django~=5.0.7
-PSNAWP==2.1.0
+Django~=4.2.4
+PSNAWP~=2.1.0
 psnawp_api==2.1.0
+bcrypt~=4.0.1
