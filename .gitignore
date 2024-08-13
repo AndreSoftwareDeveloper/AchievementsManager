@@ -3,3 +3,4 @@ achievements_manager/db.sqlite3
 achievements_manager/__pycache__
 PSN/__pycache__
 PSN/migrations/__pycache__
+db.sqlite3
